@@ -1,0 +1,19 @@
+PODS:
+  - Bolts/Tasks (1.7.0)
+  - DGActivityIndicatorView (2.0)
+  - Parse (1.13.0):
+    - Bolts/Tasks (~> 1.6)
+  - RWDropdownMenu (1.0.3)
+
+DEPENDENCIES:
+  - DGActivityIndicatorView
+  - Parse
+  - RWDropdownMenu (~> 1.0.0)
+
+SPEC CHECKSUMS:
+  Bolts: a0058fa3b331c5a1e4402d534f2dae36dbff31e4
+  DGActivityIndicatorView: 52875b025a6ccf6a431a905285c12e2bb95eb559
+  Parse: f51c24d2feb412e4b2d6cc73d37cb24e8d0089bc
+  RWDropdownMenu: c7fda4b7adf4f3f63a46d96359c2f490a7713795
+
+COCOAPODS: 0.39.0
