@@ -8,6 +8,7 @@
 
 import UIKit
 import RWDropdownMenu
+import Parse
 
 protocol FilterDelegate: class {
     func filterController(filterViewController: FilterViewController, didUpdateFilters filters: [String:AnyObject])
@@ -17,14 +18,8 @@ protocol FilterDelegate: class {
 class FilterViewController: UITableViewController {
     
     weak var delegate: FilterDelegate!
+    var filters = FilterSettings.init()
 
-    var gender = 0
-    
-    var distance = 0
-    
-    var objectName = "All"
-    
-    var requiredAction = "All"
 //    let sectionHeaders = ["Type","Status","Location", "Category"]
     
     var menuStyle: RWDropdownMenuStyle = .BlackGradient
@@ -32,10 +27,13 @@ class FilterViewController: UITableViewController {
     
     
     @IBAction func onApply(sender: UIBarButtonItem) {
-        var filters = [String:AnyObject]()
-        filters["objectName"] = objectName 
-        filters["requiredAction"] = requiredAction
-        delegate?.filterController(self, didUpdateFilters: filters)
+        var filter = [String:AnyObject]()
+        filter["objectName"] = filters.objectName
+        filter["requiredAction"] = filters.requiredAction
+        filter["gender"] = filters.gender
+        filter["geoRadius"] = filters.geoRadius
+
+        delegate?.filterController(self, didUpdateFilters: filter)
 
         navigationController?.popViewControllerAnimated(true)
     }
@@ -69,86 +67,86 @@ class FilterViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let Types: [RWDropdownMenuItem] =
             [RWDropdownMenuItem(text: "Cat", image: nil, action: {
-                self.objectName = "Cat"
+                self.filters.objectName = "Cat"
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "Dog", image: nil, action:{
-                self.objectName = "Dog"
+                self.filters.objectName = "Dog"
 
                 tableView.reloadData()
                 
              }),
              RWDropdownMenuItem(text: "Other", image: nil, action: {
-                self.objectName = "Other"
+                self.filters.objectName = "Other"
 
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "All", image: nil, action: {
-                self.objectName = "All"
+                self.filters.objectName = "All"
 
                 tableView.reloadData()
              })]
         
         let Status: [RWDropdownMenuItem] =
             [RWDropdownMenuItem(text: "Adopt", image: nil, action: {
-                self.requiredAction = "Adopt"
+                self.filters.requiredAction = "Adopt"
 
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "Rescue", image: nil, action: {
-                self.requiredAction = "Rescue"
+                self.filters.requiredAction = "Rescue"
 
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "Lost&Found", image: nil, action: {
-                self.requiredAction = "Lost&Found"
+                 self.filters.requiredAction = "Lo&Fo"
 
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "Other", image: nil, action: {
-                self.requiredAction = "Other"
+                 self.filters.requiredAction = "Other"
 
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "All", image: nil, action: {
-                self.requiredAction = "All"
+                 self.filters.requiredAction = "All"
 
                 tableView.reloadData()
              })]
         
         let Gender: [RWDropdownMenuItem] =
             [RWDropdownMenuItem(text: "Male", image: nil, action: {
-                self.gender = 1
+                 self.filters.gender = "Male"
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "Female", image: nil, action: {
-                self.gender = 2
+                 self.filters.gender = "Female"
                 tableView.reloadData()
              }),
-             RWDropdownMenuItem(text: "Steriled", image: nil, action: {
-                self.gender = 3
+             RWDropdownMenuItem(text: "Spayed/Neutered", image: nil, action: {
+                 self.filters.gender = ""
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "All", image: nil, action: {
-                self.gender = 0
+                 self.filters.gender = "All"
                 tableView.reloadData()
              })]
 
         let Distance: [RWDropdownMenuItem] =
             [RWDropdownMenuItem(text: "5 KM", image: nil, action: {
-                self.distance = 1
+                 self.filters.geoRadius = 5000.0
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "10 KM", image: nil, action: {
-                self.distance = 2
+                 self.filters.geoRadius = 10000.0
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "20 KM", image: nil, action: {
-                self.distance = 3
+                 self.filters.geoRadius = 20000.0
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "All", image: nil, action: {
-                self.distance = 0
+                 self.filters.geoRadius = 30000.0
                 tableView.reloadData()
              })]
 
@@ -165,10 +163,11 @@ class FilterViewController: UITableViewController {
             RWDropdownMenu.presentFromViewController(self, withItems: Distance, align: .Center, style: self.menuStyle, navBarImage: nil, completion:nil)
 
         case 4:
-            objectName = "All"
-            requiredAction = "All"
-            gender = 0
-            distance = 0
+            self.filters.objectName = "All"
+            self.filters.requiredAction = "All"
+            self.filters.gender = "All"
+            self.filters.geoRadius = 30000.0
+            
             tableView.reloadData()
         default: break
         }
@@ -210,9 +209,9 @@ class FilterViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel?.text = "Type"
-            cell.detailTextLabel?.text = "All"
+            cell.detailTextLabel?.text = filters.objectName
 
-            switch objectName {
+            switch self.filters.objectName {
             case "All":
                 cell.detailTextLabel?.text = "All"
             case "Cat":
@@ -224,31 +223,31 @@ class FilterViewController: UITableViewController {
             }
         case 1:
             cell.textLabel?.text = "Gender"
-            cell.detailTextLabel?.text = "All"
+            cell.detailTextLabel?.text = filters.gender
 
-            switch gender {
-            case 0:
+            switch self.filters.gender {
+            case "All":
                 cell.detailTextLabel?.text = "All"
-            case 1:
+            case "Male":
                 cell.detailTextLabel?.text = "Male"
-            case 2:
+            case "Female":
                 cell.detailTextLabel?.text = "Female"
             default:
-                cell.detailTextLabel?.text = "Steriled"
+                cell.detailTextLabel?.text = "Spayed/Neutered"
             }
 
         case 2:
             cell.textLabel?.text = "Status"
-            cell.detailTextLabel?.text = "All"
+            cell.detailTextLabel?.text = filters.requiredAction
 
-            switch requiredAction {
+            switch self.filters.requiredAction {
             case "All":
                 cell.detailTextLabel?.text = "All"
             case "Adopt":
                 cell.detailTextLabel?.text = "Adopt"
             case "Rescue":
                 cell.detailTextLabel?.text = "Rescue"
-            case "Lost&Found":
+            case "Lo&Fo":
                 cell.detailTextLabel?.text = "Lost&Found"
             default:
                 cell.detailTextLabel?.text = "Other"
@@ -256,12 +255,14 @@ class FilterViewController: UITableViewController {
 
         case 3:
             cell.textLabel?.text = "Distance"
-            switch distance {
-            case 0:
+            cell.detailTextLabel?.text = String(filters.geoRadius)
+
+            switch self.filters.geoRadius {
+            case 30000.0:
                 cell.detailTextLabel?.text = "All"
-            case 1:
+            case 5000.0:
                 cell.detailTextLabel?.text = "5 KM"
-            case 2:
+            case 10000.0:
                 cell.detailTextLabel?.text = "10 KM"
             default:
                 cell.detailTextLabel?.text = "20 KM"

@@ -50,9 +50,11 @@ class HomeViewController: UIViewController, FilterDelegate {
 
     }
     
-    func filterController(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
-        objectName = filters["objectName"] as? String
-        action = filters["requiredAction"] as? String
+    func filterController(filterViewController: FilterViewController, didUpdateFilters filter: [String : AnyObject]) {
+        print("objectName" , filter["objectName"])
+        filterSettings.objectName = filter["objectName"] as! String
+        filterSettings.requiredAction = filter["requiredAction"] as! String
+        filterSettings.gender = filter["gender"] as! String
         print("delegate 2")
     }
 
@@ -63,6 +65,7 @@ class HomeViewController: UIViewController, FilterDelegate {
         } else if segue.identifier == "toFilterSegue" {
             let dvc = segue.destinationViewController as! FilterViewController
             dvc.delegate = self
+            dvc.filters = filterSettings
         }
         
         print("prepare for segue")
@@ -153,19 +156,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("HomeCell", forIndexPath: indexPath) as! HomeCell
         let userMedia = self.cloudData[indexPath.section] as PFObject
-        let objectTemp = userMedia["objectName"] as! String
-        let actionTemp = userMedia["requiredAction"] as! String
-        if objectName == nil {
-            cell.homeCell = userMedia
-            print("all filter: ", objectName)
-
-        }
-        else if objectTemp == objectName  {
-            print("right filter: ", objectName)
-            cell.homeCell = userMedia
-        }
-
-
+        
+        cell.homeCell = userMedia
+        
         // add border and color
         cell.backgroundColor = UIColor.whiteColor()
         cell.layer.borderColor = UIColor.blackColor().CGColor
