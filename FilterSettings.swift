@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import Parse
 
 class FilterSettings {
     
-    var geoRadius = 20000.0   // Default is 30000.0, which means no filter on geoLocation.
+    var geoRadius = 30000.0   // Default is 30000.0, which means no filter on geoLocation.
     var objectName = "All"
     var requiredAction = "All"
     var gender = "All"
-    
+    var geoCurrentLocationValid = false
+    var geoCurrentLocation = PFGeoPoint()
     init() {
         
     }
