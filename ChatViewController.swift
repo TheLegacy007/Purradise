@@ -9,9 +9,13 @@
 import UIKit
 
 class ChatViewController: UIViewController {
+    
+    var groupId = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print(groupId)
 
         // Do any additional setup after loading the view.
     }

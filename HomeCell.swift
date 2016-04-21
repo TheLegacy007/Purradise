@@ -10,6 +10,10 @@ import UIKit
 import Parse
 import Social
 
+protocol CellDelegator {
+    func callSegueFromCell(myData dataobject: AnyObject)
+}
+
 class HomeCell: UITableViewCell {
     
     @IBOutlet weak var authorNameLabel: UILabel!
@@ -23,7 +27,7 @@ class HomeCell: UITableViewCell {
     
     static let dateFormatter = NSDateFormatter()
     
-   
+    var delegete: CellDelegator!
     
     var homeCell: PFObject! {
         didSet {
@@ -86,6 +90,32 @@ class HomeCell: UITableViewCell {
             
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func onTapPrivateChat(sender: UIButton) {
+        // Create a groupId if needed (of two) and segue to chatVC
+        let user1 = PFUser.currentUser()!.username!
+        let user2 = homeCell["authorName"] as! String
+        print(user1, user2)
+
+        let groupId = Messages.startPrivateChat(user1, user2: user2)
+        print("groupId", groupId)
+        self.openChat(groupId)
+        
+    }
+    
+    func openChat(groupId: String) {
+        self.delegete.callSegueFromCell(myData: groupId)
+    }
+    
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "messagesChatSegue" {
+            let chatVC = segue.destinationViewController as! ChatViewController
+            chatVC.hidesBottomBarWhenPushed = true
+            let groupId = sender as! String
+            chatVC.groupId = groupId
+
         }
     }
     

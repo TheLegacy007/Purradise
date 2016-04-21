@@ -30,6 +30,8 @@
 		CB1870C91CC6A37D002F6A09 /* FilterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */; };
 		CB4603C61CBBF5F600FA6B97 /* UserMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */; };
 		CB4603C81CBD6DD100FA6B97 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */; };
+		CBEFCE6E1CC92D5D00CDFC64 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */; };
+		CBEFCE721CC92E0700CDFC64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFCE711CC92E0700CDFC64 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,8 @@
 		CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettings.swift; sourceTree = "<group>"; };
 		CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMedia.swift; sourceTree = "<group>"; };
 		CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
+		CBEFCE711CC92E0700CDFC64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,7 @@
 		06A4041F1CB93A3400BC9F2C = {
 			isa = PBXGroup;
 			children = (
+				CBEFCE701CC92DE600CDFC64 /* Resource */,
 				06A4044C1CB950C200BC9F2C /* View */,
 				06A404471CB94F4C00BC9F2C /* Model */,
 				06A404461CB94CA700BC9F2C /* Controllers */,
@@ -145,6 +150,7 @@
 				061786D81CBA0FCD00445DB2 /* PostModel.swift */,
 				CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */,
 				CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */,
+				CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -165,6 +171,14 @@
 				7CEEE36BC99B64527A595EA5 /* Pods-Purradise.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CBEFCE701CC92DE600CDFC64 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				CBEFCE711CC92E0700CDFC64 /* Constants.swift */,
+			);
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,7 +216,7 @@
 				TargetAttributes = {
 					06A404271CB93A3400BC9F2C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = T34HEQQ8ZH;
+						DevelopmentTeam = HHM8N6W27Z;
 					};
 				};
 			};
@@ -291,6 +305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB1870C91CC6A37D002F6A09 /* FilterSettings.swift in Sources */,
+				CBEFCE721CC92E0700CDFC64 /* Constants.swift in Sources */,
+				CBEFCE6E1CC92D5D00CDFC64 /* Messages.swift in Sources */,
 				0635E11C1CC52097009150C5 /* UserViewController.swift in Sources */,
 				06A4043E1CB93A5100BC9F2C /* LoginViewController.swift in Sources */,
 				06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */,
@@ -429,7 +445,7 @@
 				INFOPLIST_FILE = Purradise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -450,7 +466,7 @@
 				INFOPLIST_FILE = Purradise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
