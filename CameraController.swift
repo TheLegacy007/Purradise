@@ -11,8 +11,9 @@ import MobileCoreServices
 import CoreLocation
 import Parse
 import DGActivityIndicatorView
+import QBImagePickerController
 
-class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
+class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, QBImagePickerControllerDelegate {
     
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var buttonPictureAndCamera: UIButton!
@@ -231,13 +232,40 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    func qb_imagePickerController(imagePickerController: QBImagePickerController!, didFinishPickingAssets assets: [AnyObject]!) {
+        let manager = PHImageManager.defaultManager()
+       
+        for asset in assets {
+            manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: nil, resultHandler: { (result, info) in
+                self.selectedImageView.image = result
+            })
+           
+        }
+        
+        dismissViewControllerAnimated(true, completion: nil)
+
+    }
+    
+    func qb_imagePickerControllerDidCancel(imagePickerController: QBImagePickerController!) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+
+    }
+    
     func normalTap() {
         print("Normal tap")
         // Activate camera roll
-        let picker = UIImagePickerController()
-        picker.allowsEditing = true
-        picker.sourceType = .PhotoLibrary
+//        let picker = UIImagePickerController()
+        let picker = QBImagePickerController()
+    
+//        picker.allowsEditing = true
+//        picker.sourceType = .PhotoLibrary
+//        picker.delegate = self
+        picker.allowsMultipleSelection = true
+        picker.minimumNumberOfSelection = 1
+        picker.maximumNumberOfSelection = 5
+        picker.showsNumberOfSelectedAssets = true
         picker.delegate = self
+        
         self.presentViewController(picker, animated: true, completion: nil)
     }
     

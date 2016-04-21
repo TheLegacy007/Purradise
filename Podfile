@@ -7,6 +7,7 @@ target 'Purradise' do
    pod 'Parse'
    pod 'DGActivityIndicatorView'
    pod 'RWDropdownMenu', '~> 1.0.0'
-
+   pod 'ImageSlideshow', '~> 0.3'
+   pod "QBImagePickerController"
 end
 
