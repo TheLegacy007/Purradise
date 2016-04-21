@@ -31,7 +31,7 @@ class HomeViewController: UIViewController, FilterDelegate {
         chatButton = UIBarButtonItem(image: UIImage(named: "chat"), style: .Plain, target: self, action: #selector(HomeViewController.openChat(_:)))
         navigationItem.rightBarButtonItems = [chatButton]
         
-        filterButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: self, action: #selector(HomeViewController.openFilter(_:)))
+        filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .Plain, target: self, action: #selector(HomeViewController.openFilter(_:)))
         
         tableView.delegate = self
         tableView.dataSource = self

@@ -86,12 +86,16 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Purradise/Bolts.framework"
   install_framework "Pods-Purradise/DGActivityIndicatorView.framework"
+  install_framework "Pods-Purradise/ImageSlideshow.framework"
   install_framework "Pods-Purradise/Parse.framework"
+  install_framework "Pods-Purradise/QBImagePickerController.framework"
   install_framework "Pods-Purradise/RWDropdownMenu.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Purradise/Bolts.framework"
   install_framework "Pods-Purradise/DGActivityIndicatorView.framework"
+  install_framework "Pods-Purradise/ImageSlideshow.framework"
   install_framework "Pods-Purradise/Parse.framework"
+  install_framework "Pods-Purradise/QBImagePickerController.framework"
   install_framework "Pods-Purradise/RWDropdownMenu.framework"
 fi
