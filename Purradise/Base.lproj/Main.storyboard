@@ -152,14 +152,6 @@
                                                         <action selector="onTapLikeButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="Tmq-PE-CW2"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLN-G9-aj0">
-                                                    <rect key="frame" x="226" y="456" width="68" height="23"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="68" id="V4N-sC-olp"/>
-                                                        <constraint firstAttribute="height" constant="23" id="mCy-ex-eYn"/>
-                                                    </constraints>
-                                                    <state key="normal" image="tweet-button-2015"/>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l4-RE-z6X">
                                                     <rect key="frame" x="299" y="433" width="38" height="16"/>
                                                     <constraints>
@@ -186,6 +178,17 @@
                                                         <constraint firstAttribute="width" secondItem="awY-h5-Fwy" secondAttribute="height" multiplier="1:1" id="nhX-Pq-oQZ"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uLN-G9-aj0">
+                                                    <rect key="frame" x="267" y="452" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="V4N-sC-olp"/>
+                                                        <constraint firstAttribute="height" constant="25" id="mCy-ex-eYn"/>
+                                                    </constraints>
+                                                    <state key="normal" image="Chat-icon"/>
+                                                    <connections>
+                                                        <action selector="onTapPrivateChat:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="ha3-72-P3a"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="eDE-8n-ABs" firstAttribute="leading" secondItem="Y6y-Xt-ACY" secondAttribute="trailing" constant="8" id="0fd-W4-4aX"/>
@@ -195,14 +198,14 @@
                                                 <constraint firstItem="awY-h5-Fwy" firstAttribute="top" secondItem="Y6y-Xt-ACY" secondAttribute="bottom" constant="8" id="ER3-C2-EvV"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="leading" secondItem="1l4-RE-z6X" secondAttribute="trailing" id="FaC-eM-tcy"/>
                                                 <constraint firstItem="EfR-JT-NXP" firstAttribute="leading" secondItem="Y6y-Xt-ACY" secondAttribute="trailing" constant="8" id="GYs-SM-8M4"/>
-                                                <constraint firstItem="MW0-Bu-QYV" firstAttribute="leading" secondItem="uLN-G9-aj0" secondAttribute="trailing" constant="6" id="IV6-fb-ptI"/>
+                                                <constraint firstItem="MW0-Bu-QYV" firstAttribute="leading" secondItem="uLN-G9-aj0" secondAttribute="trailing" constant="8" id="IV6-fb-ptI"/>
                                                 <constraint firstItem="Y6y-Xt-ACY" firstAttribute="top" secondItem="SRg-11-5tJ" secondAttribute="top" constant="8" id="Ifa-O2-mw0"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="trailing" secondItem="MW0-Bu-QYV" secondAttribute="trailing" id="IgJ-1V-1mC"/>
                                                 <constraint firstItem="eDE-8n-ABs" firstAttribute="top" secondItem="V7o-Bg-guI" secondAttribute="bottom" constant="2" id="Knh-uu-OwN"/>
                                                 <constraint firstItem="Y6y-Xt-ACY" firstAttribute="leading" secondItem="SRg-11-5tJ" secondAttribute="leading" constant="8" id="N30-S9-cTN"/>
                                                 <constraint firstAttribute="trailing" secondItem="MW0-Bu-QYV" secondAttribute="trailing" constant="8" id="S2I-Q5-xqp"/>
                                                 <constraint firstItem="1l4-RE-z6X" firstAttribute="leading" secondItem="yEg-fT-Qm8" secondAttribute="trailing" constant="7" id="fG8-Ja-6I5"/>
-                                                <constraint firstItem="uLN-G9-aj0" firstAttribute="top" secondItem="yEg-fT-Qm8" secondAttribute="bottom" constant="7" id="hBf-UR-wix"/>
+                                                <constraint firstItem="uLN-G9-aj0" firstAttribute="top" secondItem="yEg-fT-Qm8" secondAttribute="bottom" constant="3" id="hBf-UR-wix"/>
                                                 <constraint firstItem="V7o-Bg-guI" firstAttribute="top" secondItem="SRg-11-5tJ" secondAttribute="top" constant="8" id="hi3-Le-b4y"/>
                                                 <constraint firstAttribute="trailing" secondItem="EfR-JT-NXP" secondAttribute="trailing" constant="8" id="jJB-WW-TaL"/>
                                                 <constraint firstItem="yEg-fT-Qm8" firstAttribute="leading" secondItem="SRg-11-5tJ" secondAttribute="leading" constant="8" id="ljD-qq-oPC"/>
@@ -251,12 +254,12 @@
                     <connections>
                         <outlet property="tableView" destination="MtJ-2q-FMo" id="YHe-51-K2g"/>
                         <segue destination="fug-Rc-HTq" kind="show" identifier="toFilterSegue" id="QlM-Hi-zIL"/>
-                        <segue destination="hxp-YU-UrZ" kind="show" identifier="toChatSegue" id="gNd-0W-YQk"/>
+                        <segue destination="hxp-YU-UrZ" kind="show" identifier="messagesChatSegue" id="JzI-g5-6GJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYE-M5-SbT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2472.5" y="-231.5"/>
+            <point key="canvasLocation" x="2466.5" y="-231.5"/>
         </scene>
         <!--Chat-->
         <scene sceneID="Grq-bj-2EP">
@@ -272,10 +275,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="TlI-AD-fno"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4qf-1p-cGQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3595.5" y="-1066.5"/>
+            <point key="canvasLocation" x="2984.5" y="-743.5"/>
         </scene>
         <!--Filter-->
         <scene sceneID="nYs-2c-aKe">
@@ -284,7 +288,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="136" sectionHeaderHeight="18" sectionFooterHeight="18" id="LtG-uk-rcl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PreferencesCell" textLabel="OT3-uB-dzi" detailTextLabel="Qom-0T-5LC" rowHeight="136" style="IBUITableViewCellStyleValue1" id="oEh-JH-Jsk" customClass="PreferencesCell" customModule="Purradise" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="114" width="375" height="136"/>
@@ -297,7 +301,7 @@
                                             <rect key="frame" x="15" y="58" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Qom-0T-5LC">
@@ -326,7 +330,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cU4-Cb-pXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3008.5" y="-231.5"/>
+            <point key="canvasLocation" x="3290.5" y="-231.5"/>
         </scene>
         <!--User-->
         <scene sceneID="g6d-nf-7CS">
@@ -674,11 +678,11 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Chat-icon" width="256" height="256"/>
         <image name="FB-Share-Button" width="87" height="24"/>
         <image name="home" width="32" height="32"/>
         <image name="kitten paw" width="32" height="32"/>
         <image name="paw" width="32" height="32"/>
-        <image name="tweet-button-2015" width="100" height="41"/>
         <image name="user" width="32" height="32"/>
     </resources>
 </document>

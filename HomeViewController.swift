@@ -10,7 +10,7 @@ import UIKit
 import FBSDKLoginKit
 import Parse
 
-class HomeViewController: UIViewController, FilterDelegate {
+class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
     
     var cloudData: [PFObject]!
     var refreshControl:UIRefreshControl!
@@ -28,7 +28,7 @@ class HomeViewController: UIViewController, FilterDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        chatButton = UIBarButtonItem(image: UIImage(named: "chat"), style: .Plain, target: self, action: #selector(HomeViewController.openChat(_:)))
+        chatButton = UIBarButtonItem(image: UIImage(named: "chat"), style: .Plain, target: self, action: #selector(HomeViewController.openChatMessages(_:)))
         navigationItem.rightBarButtonItems = [chatButton]
         
         filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .Plain, target: self, action: #selector(HomeViewController.openFilter(_:)))
@@ -59,8 +59,10 @@ class HomeViewController: UIViewController, FilterDelegate {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "toChatSegue" {
+        if segue.identifier == "messagesChatSegue" {
             let dvc = segue.destinationViewController as! ChatViewController
+            let groupId = sender as! String
+            dvc.groupId = groupId
 
         } else if segue.identifier == "toFilterSegue" {
             let dvc = segue.destinationViewController as! FilterViewController
@@ -117,9 +119,9 @@ class HomeViewController: UIViewController, FilterDelegate {
         self.refreshControl.endRefreshing()
     }
     
-    func openChat(sender: UIBarButtonItem){
+    func openChatMessages(sender: UIBarButtonItem){
         print("open chat")
-        performSegueWithIdentifier("toChatSegue", sender: self)
+//        performSegueWithIdentifier("toChatSegue", sender: self)
 
     }
     
@@ -166,11 +168,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
         
+        cell.delegete = self
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    //MARK: - CellDelegator Method
+    
+    func callSegueFromCell(myData data: AnyObject) {
+        //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
+        self.performSegueWithIdentifier("messagesChatSegue", sender: data)
     }
 }
 
