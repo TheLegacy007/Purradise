@@ -7,33 +7,318 @@
 //
 
 import UIKit
+import Foundation
+import MediaPlayer
+import Parse
+import JSQMessagesViewController
 
-class ChatViewController: UIViewController {
+class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var groupId = ""
-
+    var timer: NSTimer = NSTimer()
+    var isLoading: Bool = false
+    
+    var groupId: String = ""
+    
+    var users = [String]()
+    var messages = [JSQMessage]()
+    var avatars = Dictionary<String, JSQMessagesAvatarImage>()
+    
+    var bubbleFactory = JSQMessagesBubbleImageFactory()
+    var outgoingBubbleImage: JSQMessagesBubbleImage!
+    var incomingBubbleImage: JSQMessagesBubbleImage!
+    
+    var blankAvatarImage: JSQMessagesAvatarImage!
+    
+    var senderImageUrl: String!
+    var batchMessages = true
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(groupId)
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        if let user = PFUser.currentUser() {
+            self.senderId = user.username
+            self.senderDisplayName = user.username
+        }
+        
+        outgoingBubbleImage = bubbleFactory.outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+        incomingBubbleImage = bubbleFactory.incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
+        
+        blankAvatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "profile_blank"), diameter: 30)
+        
+        isLoading = false
+        self.loadMessages()
+        Messages.clearMessageCounter(groupId);
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.collectionView.collectionViewLayout.springinessEnabled = true
+        timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ChatViewController.loadMessages), userInfo: nil, repeats: true)
     }
-    */
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+    }
+    
+    // Mark: - Backend methods
+    
+    func loadMessages() {
+        if self.isLoading == false {
+            self.isLoading = true
+            let lastMessage = messages.last
+            
+            let query = PFQuery(className: PF_CHAT_CLASS_NAME)
+            query.whereKey(PF_CHAT_GROUPID, equalTo: groupId)
+            if let lastMessage = lastMessage {
+                query.whereKey(PF_CHAT_CREATEDAT, greaterThan: lastMessage.date)
+            }
+//            query.includeKey(PF_CHAT_USER)    //  Not needed in our case
+            query.orderByDescending(PF_CHAT_CREATEDAT)
+            query.limit = 50
+            query.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) -> Void in
+                if error == nil {
+                    self.automaticallyScrollsToMostRecentMessage = false
+                    for object in Array((objects as [PFObject]!).reverse()) {
+                        self.addMessage(object)
+                    }
+                    if objects!.count > 0 {
+                        self.finishReceivingMessage()
+      //                  self.scrollToBottomAnimated(false)
+                    }
+                    self.automaticallyScrollsToMostRecentMessage = true
+                } else {
+//                    ProgressHUD.showError("Network error")
+                    print("Network error")
+                }
+                self.isLoading = false;
+            })
+        }
+    }
+    
+    func addMessage(object: PFObject) {
+        var message: JSQMessage!
+        
+        let user = object[PF_CHAT_USER] as! String
+        let name = object[PF_CHAT_USER] as! String
+        
+        let pictureFile = object[PF_CHAT_PICTURE] as? PFFile
+        
+        if pictureFile == nil {
+            message = JSQMessage(senderId: user, senderDisplayName: name, date: object.createdAt, text: (object[PF_CHAT_TEXT] as? String))
+        }
+        
+        if let pictureFile = pictureFile {
+            let mediaItem = JSQPhotoMediaItem(image: nil)
+            mediaItem.appliesMediaViewMaskAsOutgoing = (user == self.senderId)
+            message = JSQMessage(senderId: user, senderDisplayName: name, date: object.createdAt, media: mediaItem)
+            
+            pictureFile.getDataInBackgroundWithBlock({ (imageData: NSData?, error: NSError?) -> Void in
+                if error == nil {
+                    mediaItem.image = UIImage(data: imageData!)
+                    self.collectionView.reloadData()
+                }
+            })
+        }
+        
+        users.append(user)
+        messages.append(message)
+    }
+    
+    func sendMessage( text: String, video: NSURL?, picture: UIImage?) {
+        var pictureFile: PFFile!
+        
+        if let picture = picture {
+            let text = "[Picture message]"
+            pictureFile = PFFile(name: "picture.jpg", data: UIImageJPEGRepresentation(picture, 0.6)!)
+            pictureFile.saveInBackgroundWithBlock({ (suceeded: Bool, error: NSError?) -> Void in
+                if error != nil {
+//                    ProgressHUD.showError("Picture save error")
+                    print("Picture save error")
+                }
+            })
+        }
+        
+        let object = PFObject(className: PF_CHAT_CLASS_NAME)
+        object[PF_CHAT_USER] = PFUser.currentUser()?.username
+        object[PF_CHAT_GROUPID] = self.groupId
+        object[PF_CHAT_TEXT] = text
 
+        if let pictureFile = pictureFile {
+            object[PF_CHAT_PICTURE] = pictureFile
+        }
+        object.saveInBackgroundWithBlock{ (succeeded: Bool, error: NSError?) -> Void in
+            if error == nil {
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                self.loadMessages()
+            } else {
+//                ProgressHUD.showError("Network error")
+                print("Picture save error")
+            }
+        }
+        
+//        PushNotication.sendPushNotification(groupId, text: text)    // NOT NOW
+        Messages.updateMessageCounter(groupId, lastMessage: text)
+        
+        self.finishSendingMessage()
+    }
+    
+    // MARK: - JSQMessagesViewController method overrides
+    
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        self.sendMessage(text, video: nil, picture: nil)
+    }
+    
+    override func didPressAccessoryButton(sender: UIButton!) {
+        self.view.endEditing(true)
+        
+        let action = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Take photo", "Choose existing photo", "Choose existing video")
+        action.showInView(self.view)
+    }
+    
+    // MARK: - JSQMessages CollectionView DataSource
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        return self.messages[indexPath.item]
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        let message = self.messages[indexPath.item]
+        if message.senderId == self.senderId {
+            return outgoingBubbleImage
+        }
+        return incomingBubbleImage
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        let user = self.users[indexPath.item]
+        self.avatars[user] = JSQMessagesAvatarImageFactory.avatarImageWithImage(UIImage(named: "paw"), diameter: 30)
+        return self.avatars[user]
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        if indexPath.item % 3 == 0 {
+            let message = self.messages[indexPath.item]
+            return JSQMessagesTimestampFormatter.sharedFormatter().attributedTimestampForDate(message.date)
+        }
+        return nil;
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        let message = self.messages[indexPath.item]
+        if message.senderId == self.senderId {
+            return nil
+        }
+        
+        if indexPath.item > 0 {
+            let previousMessage = self.messages[indexPath.item - 1]
+            if previousMessage.senderId == message.senderId {
+                return nil
+            }
+        }
+        return NSAttributedString(string: message.senderDisplayName)
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, attributedTextForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        return nil
+    }
+    
+    // MARK: - UICollectionView DataSource
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.messages.count
+    }
+    
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
+        
+        let message = self.messages[indexPath.item]
+        if message.senderId == self.senderId {
+            cell.textView?.textColor = UIColor.whiteColor()
+        } else {
+            cell.textView?.textColor = UIColor.blackColor()
+        }
+        return cell
+    }
+    
+    // MARK: - UICollectionView flow layout
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        if indexPath.item % 3 == 0 {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
+        }
+        return 0
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        let message = self.messages[indexPath.item]
+        if message.senderId == self.senderId {
+            return 0
+        }
+        
+        if indexPath.item > 0 {
+            let previousMessage = self.messages[indexPath.item - 1]
+            if previousMessage.senderId == message.senderId {
+                return 0
+            }
+        }
+        
+        return kJSQMessagesCollectionViewCellLabelHeightDefault
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
+        return 0
+    }
+    
+    // MARK: - Responding to CollectionView tap events
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, header headerView: JSQMessagesLoadEarlierHeaderView!, didTapLoadEarlierMessagesButton sender: UIButton!) {
+        print("didTapLoadEarlierMessagesButton")
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapAvatarImageView avatarImageView: UIImageView!, atIndexPath indexPath: NSIndexPath!) {
+        print("didTapAvatarImageview")
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
+        let message = self.messages[indexPath.item]
+        if message.isMediaMessage {
+            if let mediaItem = message.media as? JSQVideoMediaItem {
+                let moviePlayer = MPMoviePlayerViewController(contentURL: mediaItem.fileURL)
+                self.presentMoviePlayerViewControllerAnimated(moviePlayer)
+                moviePlayer.moviePlayer.play()
+            }
+        }
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapCellAtIndexPath indexPath: NSIndexPath!, touchLocation: CGPoint) {
+        print("didTapCellAtIndexPath")
+    }
+    
+    // MARK: - UIActionSheetDelegate
+    
+    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex != actionSheet.cancelButtonIndex {
+            if buttonIndex == 1 {
+                Camera.shouldStartCamera(self, canEdit: true, frontFacing: true)
+            } else if buttonIndex == 2 {
+                Camera.shouldStartPhotoLibrary(self, canEdit: true)
+            } else if buttonIndex == 3 {
+                Camera.shouldStartVideoLibrary(self, canEdit: true)
+            }
+        }
+ 
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let video = info[UIImagePickerControllerMediaURL] as? NSURL
+        let picture = info[UIImagePickerControllerEditedImage] as? UIImage
+        
+        self.sendMessage("", video: video, picture: picture)
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
 }

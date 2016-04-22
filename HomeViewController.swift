@@ -63,6 +63,7 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
             let dvc = segue.destinationViewController as! ChatViewController
             let groupId = sender as! String
             dvc.groupId = groupId
+//            dvc.hidesBottomBarWhenPushed = true    // There is more work to do with UICollectionViewFlowLayout, leave it for tomorrow.
 
         } else if segue.identifier == "toFilterSegue" {
             let dvc = segue.destinationViewController as! FilterViewController
