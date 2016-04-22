@@ -9,51 +9,38 @@
 import UIKit
 import Parse
 import Social
+import ImageSlideshow
 
-protocol CellDelegator {
-    func callSegueFromCell(myData dataobject: AnyObject)
-}
 
 class HomeCell: UITableViewCell {
     
-    @IBOutlet weak var authorNameLabel: UILabel!
-    @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var requiredActionLabel: UILabel!
     @IBOutlet weak var likesCountLabel: UILabel!
     
-    @IBOutlet weak var authorImage: UIImageView!
-    @IBOutlet weak var petImage: UIImageView!
-    
+    @IBOutlet weak var slideshow: ImageSlideshow!
+    var delegete: CellDelegator!
+
     static let dateFormatter = NSDateFormatter()
     
-    var delegete: CellDelegator!
     
     var homeCell: PFObject! {
         didSet {
             if let homeCell = homeCell {
-                authorNameLabel.text = homeCell["authorName"] as? String
-                locationLabel.text = homeCell["location"] as? String
+                
+                slideshow.backgroundColor = UIColor.whiteColor()
+                slideshow.slideshowInterval = 5.0
+                slideshow.pageControlPosition = PageControlPosition.UnderScrollView
+                slideshow.pageControl.currentPageIndicatorTintColor = UIColor.lightGrayColor();
+                slideshow.pageControl.pageIndicatorTintColor = UIColor.blackColor();
+                
                 print(homeCell["likesCount"])
                 likesCountLabel.text = String(homeCell["likesCount"])
                 let media = homeCell["media"] as! PFFile
-                let updatedAt = homeCell.updatedAt
-                HomeCell.dateFormatter.dateFormat = "HH:mm:ss EEE MMM"
-                timestampLabel.text = HomeCell.dateFormatter.stringFromDate(updatedAt!)
                 
-                let requiredAction = homeCell["requiredAction"] as! NSString
-                print(requiredAction)
-                switch requiredAction {
-                    case "Adopt": requiredActionLabel.text = "\(authorNameLabel.text!) has this for adoption."
-                    case "Rescue": requiredActionLabel.text = "\(authorNameLabel.text!) needs you to rescue it."
-                    case "Lo&Fo": requiredActionLabel.text = "\(authorNameLabel.text!) has a lost or found pet."
-                    case "Other": requiredActionLabel.text = "\(authorNameLabel.text!) has this for other reason."
-                    default: break
-                }
                 
                 media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                     if let data = data {
-                        self.petImage.image = UIImage(data: data)
+                        self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
+
                     }
                 })
             }
@@ -93,39 +80,16 @@ class HomeCell: UITableViewCell {
         }
     }
     
-    @IBAction func onTapPrivateChat(sender: UIButton) {
-        // Create a groupId if needed (of two) and segue to chatVC
-        let user1 = PFUser.currentUser()!.username!
-        let user2 = homeCell["authorName"] as! String
-        print(user1, user2)
-
-        let groupId = Messages.startPrivateChat(user1, user2: user2)
-        print("groupId", groupId)
-        self.openChat(groupId)
+   
+    
         
-    }
-    
-    func openChat(groupId: String) {
-        self.delegete.callSegueFromCell(myData: groupId)
-    }
-    
-    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "messagesChatSegue" {
-            let chatVC = segue.destinationViewController as! ChatViewController
-            chatVC.hidesBottomBarWhenPushed = true
-            let groupId = sender as! String
-            chatVC.groupId = groupId
-
-        }
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         // Make up Pet's image
-        petImage.layer.cornerRadius = 5
-        petImage.clipsToBounds = true
-        
+        slideshow.clipsToBounds = true
+        slideshow.layer.cornerRadius = 5
+
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -136,38 +100,3 @@ class HomeCell: UITableViewCell {
 
 }
 
-extension HomeCell {
-    
-    func timeElapsed(date: NSDate) -> String {
-        if let hours = hoursFrom(date) {
-            return "\(hours)h"
-        } else if let minutes = minutesFrom(date) {
-            return "\(minutes)m"
-        } else {
-            return "\(secondsFrom(date))s"
-        }
-    }
-    
-    func hoursFrom(date: NSDate) -> Int? {
-        let hours = NSCalendar.currentCalendar().components(NSCalendarUnit.Hour, fromDate: date, toDate: NSDate(), options: []).hour
-        if hours == 0 {
-            return nil
-        } else {
-            return hours
-        }
-    }
-    
-    func minutesFrom(date: NSDate) -> Int? {
-        let minutes = NSCalendar.currentCalendar().components(NSCalendarUnit.Minute, fromDate: date, toDate: NSDate(), options: []).minute
-        if minutes == 0 {
-            return nil
-        } else {
-            return minutes
-        }
-    }
-    
-    func secondsFrom(date: NSDate) -> Int {
-        return NSCalendar.currentCalendar().components(NSCalendarUnit.Second, fromDate: date, toDate: NSDate(), options: []).second
-    }
-    
-}

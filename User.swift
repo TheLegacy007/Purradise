@@ -13,7 +13,6 @@ class User: NSObject {
 
     var username: NSString?
     var profileUrl: NSURL?
-    var posts:Array<PostModel>
     
     var dictionary: NSDictionary?
     
@@ -22,7 +21,6 @@ class User: NSObject {
         
         username = dictionary["username"] as? String
         profileUrl = dictionary["profileUrl"] as? NSURL
-        posts = dictionary["posts"] as! Array<PostModel>
         
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {
