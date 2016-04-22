@@ -32,6 +32,7 @@
 		CB4603C81CBD6DD100FA6B97 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */; };
 		CBEFCE6E1CC92D5D00CDFC64 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */; };
 		CBEFCE721CC92E0700CDFC64 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFCE711CC92E0700CDFC64 /* Constants.swift */; };
+		CBEFCE741CCA2B2800CDFC64 /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBEFCE731CCA2B2800CDFC64 /* Camera.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,7 @@
 		CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		CBEFCE711CC92E0700CDFC64 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CBEFCE731CCA2B2800CDFC64 /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				CBEFCE711CC92E0700CDFC64 /* Constants.swift */,
+				CBEFCE731CCA2B2800CDFC64 /* Camera.swift */,
 			);
 			name = Resource;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */,
 				0635E1241CC52F2A009150C5 /* HomeViewController.swift in Sources */,
 				061786D91CBA0FCD00445DB2 /* PostModel.swift in Sources */,
+				CBEFCE741CCA2B2800CDFC64 /* Camera.swift in Sources */,
 				06A4042C1CB93A3400BC9F2C /* AppDelegate.swift in Sources */,
 				CB4603C61CBBF5F600FA6B97 /* UserMedia.swift in Sources */,
 				06A404491CB94F6900BC9F2C /* User.swift in Sources */,
