@@ -146,14 +146,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Set the spacing between sections
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8.0
+        return 60
     }
     
     // Make the background color show through
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = UIColor.clearColor()
-        return headerView
+        let headerCell = tableView.dequeueReusableCellWithIdentifier("HomeHeaderCell") as? HomeHeaderCell
+        
+        headerCell?.homeHeaderCell = self.cloudData[section] as PFObject
+        headerCell?.delegete = self
+        return headerCell
+
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
