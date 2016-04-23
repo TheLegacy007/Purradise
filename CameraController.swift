@@ -238,6 +238,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         for asset in assets {
             manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: nil, resultHandler: { (result, info) in
                 self.selectedImageView.image = result
+                self.resizedImage = result
             })
            
         }

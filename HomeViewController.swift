@@ -10,10 +10,8 @@ import UIKit
 import FBSDKLoginKit
 import Parse
 
-class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
-    @IBAction func onTapTray(sender: UITapGestureRecognizer) {
-        
-    }
+class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDelegate {
+    
     
     var cloudData: [PFObject]!
     var refreshControl:UIRefreshControl!
@@ -26,7 +24,13 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
     var objectName: String?
     var action: String?
     
+    var geoLocation: PFGeoPoint?
+    var petImage: UIImage!
+
+
+    
     let filterSettings = FilterSettings.init()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,8 +61,10 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
 
     }
     
+    
+    
+    
     func filterController(filterViewController: FilterViewController, didUpdateFilters filter: [String : AnyObject]) {
-        print("objectName" , filter["objectName"])
         filterSettings.objectName = filter["objectName"] as! String
         filterSettings.requiredAction = filter["requiredAction"] as! String
         filterSettings.gender = filter["gender"] as! String
@@ -76,8 +82,13 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
             let dvc = segue.destinationViewController as! FilterViewController
             dvc.delegate = self
             dvc.filters = filterSettings
+        } else if segue.identifier == "toMapSegue" {
+            let dvc = segue.destinationViewController as! MapViewController
+            dvc.geoLocation = geoLocation
+            dvc.petImage = petImage
+            print("prepare for toMapSegue")
+
         }
-        
         print("prepare for segue")
     }
     
@@ -158,10 +169,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Make the background color show through
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCellWithIdentifier("HomeHeaderCell") as? HomeHeaderCell
+        let headerCell = tableView.dequeueReusableCellWithIdentifier("HomeHeaderCell") as! HomeHeaderCell
         
-        headerCell?.homeHeaderCell = self.cloudData[section] as PFObject
-        headerCell?.delegete = self
+        headerCell.homeHeaderCell = self.cloudData[section] as PFObject
+        headerCell.delegete = self
         return headerCell
 
     }
@@ -179,7 +190,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
         
-        cell.delegete = self
+        cell.delegate = self
         
         return cell
     }
@@ -193,6 +204,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func callSegueFromCell(myData data: AnyObject) {
         //try not to send self, just to avoid retain cycles(depends on how you handle the code on the next controller)
         self.performSegueWithIdentifier("messagesChatSegue", sender: data)
+    }
+    
+    func mapController(didGetMapData data: [String : AnyObject]) {
+        geoLocation = data["geoLocation"] as? PFGeoPoint
+        petImage = data["petImage"] as! UIImage
+        self.performSegueWithIdentifier("toMapSegue", sender: self)
+        print("delegate")
+
     }
 }
 

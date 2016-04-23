@@ -161,6 +161,13 @@
                                                         </mask>
                                                     </variation>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfA-MJ-3I7">
+                                                    <rect key="frame" x="180" y="383" width="25" height="21"/>
+                                                    <state key="normal" image="map"/>
+                                                    <connections>
+                                                        <action selector="onMapButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="J2L-MV-87H"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="MW0-Bu-QYV" firstAttribute="top" secondItem="1l4-RE-z6X" secondAttribute="bottom" constant="8" id="0CJ-BM-IoM"/>
@@ -170,11 +177,13 @@
                                                 <constraint firstItem="gcD-OF-7Ba" firstAttribute="top" secondItem="SRg-11-5tJ" secondAttribute="top" id="29r-ks-0Kr"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ywh-z9-b9r" secondAttribute="bottom" constant="8" id="3SN-zk-D51"/>
                                                 <constraint firstItem="gcD-OF-7Ba" firstAttribute="leading" secondItem="SRg-11-5tJ" secondAttribute="leading" id="3eh-J0-2PJ"/>
+                                                <constraint firstItem="1l4-RE-z6X" firstAttribute="leading" secondItem="YfA-MJ-3I7" secondAttribute="trailing" constant="16" id="6hd-5w-mRr"/>
                                                 <constraint firstItem="1l4-RE-z6X" firstAttribute="top" secondItem="gcD-OF-7Ba" secondAttribute="bottom" constant="8" id="8qn-M1-55Y"/>
                                                 <constraint firstItem="MW0-Bu-QYV" firstAttribute="centerY" secondItem="1l4-RE-z6X" secondAttribute="centerY" id="9Ze-3z-AVc"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="centerY" secondItem="1l4-RE-z6X" secondAttribute="centerY" id="Bbl-O8-irt"/>
                                                 <constraint firstItem="gcD-OF-7Ba" firstAttribute="leading" secondItem="SRg-11-5tJ" secondAttribute="leadingMargin" id="E7g-Wp-lrN"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="leading" secondItem="1l4-RE-z6X" secondAttribute="trailing" id="FaC-eM-tcy"/>
+                                                <constraint firstItem="1l4-RE-z6X" firstAttribute="centerY" secondItem="YfA-MJ-3I7" secondAttribute="centerY" id="FpT-Lr-99o"/>
                                                 <constraint firstAttribute="bottom" secondItem="MW0-Bu-QYV" secondAttribute="bottom" constant="24" id="Gej-MO-amT"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="top" secondItem="gcD-OF-7Ba" secondAttribute="bottom" constant="8" id="HCZ-KH-u5g"/>
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="leading" secondItem="1l4-RE-z6X" secondAttribute="trailing" constant="8" id="HYd-y4-jGC"/>
@@ -193,6 +202,7 @@
                                                 <constraint firstItem="ywh-z9-b9r" firstAttribute="top" secondItem="gcD-OF-7Ba" secondAttribute="bottom" constant="8" id="Wy3-bx-K3Q"/>
                                                 <constraint firstItem="gcD-OF-7Ba" firstAttribute="top" secondItem="SRg-11-5tJ" secondAttribute="top" id="XBv-bk-3H5"/>
                                                 <constraint firstAttribute="trailing" secondItem="ywh-z9-b9r" secondAttribute="trailing" constant="8" id="XKd-Re-wrP"/>
+                                                <constraint firstItem="YfA-MJ-3I7" firstAttribute="top" secondItem="gcD-OF-7Ba" secondAttribute="bottom" constant="8" id="Xo5-L6-3c9"/>
                                                 <constraint firstAttribute="trailing" secondItem="gcD-OF-7Ba" secondAttribute="trailing" constant="8" id="ZCc-HN-tZp"/>
                                                 <constraint firstItem="1l4-RE-z6X" firstAttribute="trailing" secondItem="gcD-OF-7Ba" secondAttribute="trailing" id="ZXE-O0-Oq0"/>
                                                 <constraint firstItem="MW0-Bu-QYV" firstAttribute="leading" secondItem="ywh-z9-b9r" secondAttribute="trailing" constant="8" id="ZrI-FP-HQp"/>
@@ -360,6 +370,7 @@
                         <outlet property="tableView" destination="MtJ-2q-FMo" id="YHe-51-K2g"/>
                         <segue destination="fug-Rc-HTq" kind="show" identifier="toFilterSegue" id="QlM-Hi-zIL"/>
                         <segue destination="hxp-YU-UrZ" kind="show" identifier="messagesChatSegue" id="JzI-g5-6GJ"/>
+                        <segue destination="X2y-l0-kP3" kind="show" identifier="toMapSegue" id="P3h-x4-bnT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IYE-M5-SbT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -435,7 +446,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cU4-Cb-pXQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3135.5" y="-270.5"/>
+            <point key="canvasLocation" x="2984.5" y="57.5"/>
         </scene>
         <!--User-->
         <scene sceneID="g6d-nf-7CS">
@@ -702,6 +713,32 @@
             </objects>
             <point key="canvasLocation" x="2486.5" y="507.5"/>
         </scene>
+        <!--Map View Controller-->
+        <scene sceneID="mGs-Mz-wL3">
+            <objects>
+                <viewController id="X2y-l0-kP3" customClass="MapViewController" customModule="Purradise" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7VZ-Zm-wLI"/>
+                        <viewControllerLayoutGuide type="bottom" id="qwp-A0-Zha"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UX9-th-Urd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iqZ-gN-glA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="iqZ-gN-glA" id="TsV-mh-2RV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wvp-5C-K5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2984.5" y="872.5"/>
+        </scene>
         <!--Center Tab Bar Controller-->
         <scene sceneID="Vd7-sf-Nbs">
             <objects>
@@ -786,6 +823,7 @@
         <image name="FB-Share-Button" width="87" height="24"/>
         <image name="chat" width="32" height="32"/>
         <image name="home" width="32" height="32"/>
+        <image name="map" width="25" height="25"/>
         <image name="paw" width="32" height="32"/>
         <image name="user" width="32" height="32"/>
     </resources>
