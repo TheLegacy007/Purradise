@@ -11,8 +11,28 @@ import Parse
 import Social
 import ImageSlideshow
 
+protocol MapDelegate {
+    func mapController(didGetMapData data: [String:AnyObject])
+}
 
 class HomeCell: UITableViewCell {
+    
+    @IBAction func onMapButton(sender: UIButton) {
+        var data = [String:AnyObject]()
+        data["geoLocation"] = geoLocation
+        data["petImage"] = petImage
+        
+        print("onMap")
+        self.openMap(data)
+
+
+    }
+    
+    func openMap(data: [String:AnyObject]) {
+        self.delegate?.mapController(didGetMapData: data)
+    }
+    
+    
     
     @IBOutlet weak var likesCountLabel: UILabel!
     
@@ -20,9 +40,10 @@ class HomeCell: UITableViewCell {
     
     var transitionDelegate: ZoomAnimatedTransitioningDelegate?
     
-    var delegete: CellDelegator!
-
+    var geoLocation: PFGeoPoint!
+    var petImage: UIImage!
    
+    var delegate: MapDelegate!
 
     static let dateFormatter = NSDateFormatter()
     
@@ -41,11 +62,12 @@ class HomeCell: UITableViewCell {
                 likesCountLabel.text = String(homeCell["likesCount"])
                 let media = homeCell["media"] as! PFFile
                 
+                geoLocation = homeCell["geoLocation"] as! PFGeoPoint
                 
                 media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                     if let data = data {
                         self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
-
+                        self.petImage = UIImage(data: data)
                     }
                 })
             }
@@ -53,7 +75,9 @@ class HomeCell: UITableViewCell {
         }
     }
     
-    func click() {
+    
+    
+    func onTapSlideShow() {
         let ctr = FullScreenSlideshowViewController()
         ctr.pageSelected = {(page: Int) in
             self.slideshow.setScrollViewPage(page, animated: false)
@@ -102,13 +126,12 @@ class HomeCell: UITableViewCell {
     
    
     
-        
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         // Make up Pet's image
         slideshow.clipsToBounds = true
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(HomeCell.click))
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(HomeCell.onTapSlideShow))
         slideshow.addGestureRecognizer(recognizer)
 
     }

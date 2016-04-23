@@ -71,7 +71,7 @@ class HomeHeaderCell: UITableViewCell {
             chatVC.hidesBottomBarWhenPushed = true
             let groupId = sender as! String
             chatVC.groupId = groupId
-            
+            print("chats")
         }
     }
 

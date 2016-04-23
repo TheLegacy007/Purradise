@@ -24,6 +24,9 @@
 		06A4044E1CB950DB00BC9F2C /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A4044D1CB950DB00BC9F2C /* HomeCell.swift */; };
 		06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A664AD1CC22CC700667A53 /* PreferencesCell.swift */; };
 		06D3C5F41CCA7FD30026C230 /* HomeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D3C5F31CCA7FD30026C230 /* HomeHeaderCell.swift */; };
+		06D3C5F71CCB85230026C230 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D3C5F61CCB85230026C230 /* MapViewController.swift */; };
+		06D3C5F91CCB85960026C230 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06D3C5F81CCB85950026C230 /* MapKit.framework */; };
+		06D3C5FB1CCB91CA0026C230 /* PhotoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D3C5FA1CCB91CA0026C230 /* PhotoAnnotation.swift */; };
 		06E2A2211CC6325D0063D55C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E2A2201CC6325D0063D55C /* ChatViewController.swift */; };
 		7FE8A3E8401696FD30E19EFA /* Pods_Purradise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D3AB9131CAB6FBBF0EE780 /* Pods_Purradise.framework */; };
 		CB0FF5991CC4B54F00326004 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0FF5981CC4B54F00326004 /* DetailsViewController.swift */; };
@@ -55,6 +58,9 @@
 		06A4044D1CB950DB00BC9F2C /* HomeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		06A664AD1CC22CC700667A53 /* PreferencesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesCell.swift; sourceTree = "<group>"; };
 		06D3C5F31CCA7FD30026C230 /* HomeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeaderCell.swift; sourceTree = "<group>"; };
+		06D3C5F61CCB85230026C230 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		06D3C5F81CCB85950026C230 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		06D3C5FA1CCB91CA0026C230 /* PhotoAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAnnotation.swift; sourceTree = "<group>"; };
 		06E2A2201CC6325D0063D55C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		21D3AB9131CAB6FBBF0EE780 /* Pods_Purradise.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Purradise.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CEEE36BC99B64527A595EA5 /* Pods-Purradise.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Purradise.release.xcconfig"; path = "Pods/Target Support Files/Pods-Purradise/Pods-Purradise.release.xcconfig"; sourceTree = "<group>"; };
@@ -73,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06D3C5F91CCB85960026C230 /* MapKit.framework in Frameworks */,
 				CB4603C81CBD6DD100FA6B97 /* CoreLocation.framework in Frameworks */,
 				06A404441CB93B7200BC9F2C /* FBSDKLoginKit.framework in Frameworks */,
 				06A404431CB93B7200BC9F2C /* FBSDKCoreKit.framework in Frameworks */,
@@ -121,6 +128,7 @@
 		06A4043F1CB93B5900BC9F2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				06D3C5F81CCB85950026C230 /* MapKit.framework */,
 				CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */,
 				06A404401CB93B7200BC9F2C /* FBSDKCoreKit.framework */,
 				06A404411CB93B7200BC9F2C /* FBSDKLoginKit.framework */,
@@ -141,6 +149,7 @@
 				0635E11B1CC52097009150C5 /* UserViewController.swift */,
 				0635E11F1CC52D84009150C5 /* FilterViewController.swift */,
 				06E2A2201CC6325D0063D55C /* ChatViewController.swift */,
+				06D3C5F61CCB85230026C230 /* MapViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -152,6 +161,7 @@
 				CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */,
 				CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */,
 				CBEFCE6D1CC92D5D00CDFC64 /* Messages.swift */,
+				06D3C5FA1CCB91CA0026C230 /* PhotoAnnotation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -312,8 +322,10 @@
 				CBEFCE6E1CC92D5D00CDFC64 /* Messages.swift in Sources */,
 				0635E11C1CC52097009150C5 /* UserViewController.swift in Sources */,
 				06A4043E1CB93A5100BC9F2C /* LoginViewController.swift in Sources */,
+				06D3C5FB1CCB91CA0026C230 /* PhotoAnnotation.swift in Sources */,
 				06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */,
 				0635E1241CC52F2A009150C5 /* HomeViewController.swift in Sources */,
+				06D3C5F71CCB85230026C230 /* MapViewController.swift in Sources */,
 				06D3C5F41CCA7FD30026C230 /* HomeHeaderCell.swift in Sources */,
 				CBEFCE741CCA2B2800CDFC64 /* Camera.swift in Sources */,
 				06A4042C1CB93A3400BC9F2C /* AppDelegate.swift in Sources */,
