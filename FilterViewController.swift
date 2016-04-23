@@ -44,7 +44,7 @@ class FilterViewController: UITableViewController {
         tableView.reloadData()
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableViewAutomaticDimension
-       tableView.reloadData()
+        tableView.reloadData()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

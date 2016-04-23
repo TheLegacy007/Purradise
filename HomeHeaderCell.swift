@@ -16,8 +16,8 @@ protocol CellDelegator {
 
 class HomeHeaderCell: UITableViewCell {
 
+    @IBOutlet weak var actionImage: UIImageView!
     @IBOutlet weak var timestampLabel: UILabel!
-    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var authorImage: UIImageView!
     
@@ -29,13 +29,21 @@ class HomeHeaderCell: UITableViewCell {
         didSet {
             if let homeHeaderCell = homeHeaderCell {
                 
+                let action = homeHeaderCell["objectName"] as! String
+                switch action {
+                    case "Dog": actionImage.image = UIImage(named: "dog-bone")
+                    case "Cat": actionImage.image = UIImage(named: "fish-bone")
+                    case "Other": actionImage.image = nil
+                default: break
+                }
                 
                 authorLabel.text = homeHeaderCell["authorName"] as? String
-                locationLabel.text = homeHeaderCell["location"] as? String
+//                locationLabel.text = homeHeaderCell["location"] as? String
                 let updatedAt = homeHeaderCell.updatedAt
-                HomeCell.dateFormatter.dateFormat = "HH:mm:ss EEE MMM"
-                timestampLabel.text = HomeCell.dateFormatter.stringFromDate(updatedAt!)
                 
+                HomeCell.dateFormatter.dateFormat = "HH:mm:ss EEE MMM"
+//                timestampLabel.text = HomeCell.dateFormatter.stringFromDate(updatedAt!)
+                timestampLabel.text = timeElapsed(updatedAt!)
 
             }
         }
@@ -83,14 +91,26 @@ class HomeHeaderCell: UITableViewCell {
 extension HomeHeaderCell {
     
     func timeElapsed(date: NSDate) -> String {
-        if let hours = hoursFrom(date) {
-            return "\(hours)h"
+        if let days = daysFrom(date) {
+            return "\(days) days ago"
+        } else if let hours = hoursFrom(date) {
+            return "\(hours)h ago"
         } else if let minutes = minutesFrom(date) {
-            return "\(minutes)m"
+            return "\(minutes)m ago"
         } else {
-            return "\(secondsFrom(date))s"
+            return "\(secondsFrom(date))s ago"
         }
     }
+    
+    func daysFrom(date: NSDate) -> Int? {
+        let days = NSCalendar.currentCalendar().components(NSCalendarUnit.Day, fromDate: date, toDate: NSDate(), options: []).day
+        if days == 0 {
+            return nil
+        } else {
+            return days
+        }
+    }
+
     
     func hoursFrom(date: NSDate) -> Int? {
         let hours = NSCalendar.currentCalendar().components(NSCalendarUnit.Hour, fromDate: date, toDate: NSDate(), options: []).hour
