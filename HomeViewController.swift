@@ -11,6 +11,9 @@ import FBSDKLoginKit
 import Parse
 
 class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
+    @IBAction func onTapTray(sender: UITapGestureRecognizer) {
+        
+    }
     
     var cloudData: [PFObject]!
     var refreshControl:UIRefreshControl!
@@ -35,6 +38,10 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.estimatedRowHeight = 500
+        tableView.rowHeight = UITableViewAutomaticDimension
+
+        
         
         searchBar = UISearchBar()
         searchBar.delegate = self
@@ -146,7 +153,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Set the spacing between sections
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 60
+        return 55
     }
     
     // Make the background color show through

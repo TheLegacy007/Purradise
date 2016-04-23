@@ -17,7 +17,12 @@ class HomeCell: UITableViewCell {
     @IBOutlet weak var likesCountLabel: UILabel!
     
     @IBOutlet weak var slideshow: ImageSlideshow!
+    
+    var transitionDelegate: ZoomAnimatedTransitioningDelegate?
+    
     var delegete: CellDelegator!
+
+   
 
     static let dateFormatter = NSDateFormatter()
     
@@ -28,9 +33,9 @@ class HomeCell: UITableViewCell {
                 
                 slideshow.backgroundColor = UIColor.whiteColor()
                 slideshow.slideshowInterval = 5.0
-                slideshow.pageControlPosition = PageControlPosition.UnderScrollView
-                slideshow.pageControl.currentPageIndicatorTintColor = UIColor.lightGrayColor();
-                slideshow.pageControl.pageIndicatorTintColor = UIColor.blackColor();
+                slideshow.pageControlPosition = PageControlPosition.InsideScrollView
+                slideshow.pageControl.currentPageIndicatorTintColor = UIColor.whiteColor();
+                slideshow.pageControl.pageIndicatorTintColor = UIColor.lightGrayColor();
                 
                 print(homeCell["likesCount"])
                 likesCountLabel.text = String(homeCell["likesCount"])
@@ -48,6 +53,21 @@ class HomeCell: UITableViewCell {
         }
     }
     
+    func click() {
+        let ctr = FullScreenSlideshowViewController()
+        ctr.pageSelected = {(page: Int) in
+            self.slideshow.setScrollViewPage(page, animated: false)
+        }
+        
+        ctr.initialPage = slideshow.scrollViewPage
+        ctr.inputs = slideshow.images
+        self.transitionDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow)
+        // Uncomment if you want disable the slide-to-dismiss feature
+        // self.transitionDelegate?.slideToDismissEnabled = false
+
+        ctr.transitioningDelegate = self.transitionDelegate
+        self.window?.rootViewController?.presentViewController(ctr, animated: true, completion: nil)
+    }
     
     @IBAction func onTapLikeButton(sender: UIButton) {
         // The following implementation is a very simple like button. Further improvement will be done. 
@@ -88,7 +108,8 @@ class HomeCell: UITableViewCell {
         // Initialization code
         // Make up Pet's image
         slideshow.clipsToBounds = true
-        slideshow.layer.cornerRadius = 5
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(HomeCell.click))
+        slideshow.addGestureRecognizer(recognizer)
 
     }
 
