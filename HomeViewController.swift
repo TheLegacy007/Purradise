@@ -42,7 +42,7 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 500
+       tableView.estimatedRowHeight = 530
         tableView.rowHeight = UITableViewAutomaticDimension
 
         
