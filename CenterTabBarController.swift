@@ -9,11 +9,20 @@
 import UIKit
 
 class CenterTabBarController: UITabBarController {
+    
+    func uicolorFromHex(rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.tintColor = UIColor.whiteColor()
-        tabBar.barTintColor = UIColor(white: 0.25, alpha: 1)
+        tabBar.tintColor = uicolorFromHex(0xffd700)
+        tabBar.barTintColor = UIColor.whiteColor()
         tabBar.translucent = false
         
         let centerButton = UIButton(type: .Custom)
@@ -38,6 +47,6 @@ class CenterTabBarController: UITabBarController {
     func showCamera(sender: UIButton!){
         let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let cameraPicker = mainStoryboard.instantiateViewControllerWithIdentifier("CameraPopup")
-        self.presentViewController(cameraPicker, animated: true, completion: nil)
+        self.presentViewController(cameraPicker, animated: false, completion: nil)
     }
 }
