@@ -27,7 +27,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     @IBOutlet weak var bottomViewConstraint: NSLayoutConstraint!
     
     var camera_flag = false
-    var resizedImage: UIImage!
+    var resizedImage: [UIImage] = []
     var point: PFGeoPoint?
     var objectName = "Other"
     var requiredAction = "Other"
@@ -181,7 +181,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     @IBAction func onTapPost(sender: UIBarButtonItem) {
         
-        if (resizedImage != nil) {
+        if (resizedImage.count != 0) {
             activityIndicatorView.center = self.view.center
             self.view.addSubview(activityIndicatorView)
             activityIndicatorView.startAnimating()
@@ -219,7 +219,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
 //      let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         selectedImageView.image = editedImage
-        resizedImage = editedImage
+//        resizedImage = editedImage    // Changed to an array
         if picker.sourceType == .Camera {
             navigationItem.title = "From Camera"
         } else {
@@ -234,11 +234,14 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     func qb_imagePickerController(imagePickerController: QBImagePickerController!, didFinishPickingAssets assets: [AnyObject]!) {
         let manager = PHImageManager.defaultManager()
-       
+        self.resizedImage.removeAll()
+        print("assets is \(assets.count)")
         for asset in assets {
             manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: nil, resultHandler: { (result, info) in
+
                 self.selectedImageView.image = result
-                self.resizedImage = result
+                self.resizedImage.append(result!)
+                print("You selected \(self.resizedImage.count)")
             })
            
         }
