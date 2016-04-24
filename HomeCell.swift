@@ -59,6 +59,7 @@ class HomeCell: UITableViewCell {
 
     static let dateFormatter = NSDateFormatter()
     
+    var imageArray: [UIImage] = []
     
     var homeCell: PFObject! {
         didSet {
@@ -93,22 +94,72 @@ class HomeCell: UITableViewCell {
                     })
                 }
                 
-                // New database
-                for index in 0...4 {
-                    if let media = homeCell["image\(index)"] {
-                        media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                // WARNING: DIRTY CODES BELOW - SHOULD USE RECURSIVE!
+                imageArray = [UIImage(named: "user.png")!, UIImage(named: "user.png")!, UIImage(named: "user.png")!, UIImage(named: "user.png")!, UIImage(named: "user.png")!]   // Make sure the array is always available for async-reading response.
+                if let media0 = homeCell["image0"] {
+                    print(media0)
+                    media0.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) in
+                        if error == nil {
                             if let data = data {
-                                self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
+                                self.imageArray[0] = (UIImage(data: data)!)
+                                self.slideshow.setImageInputs([ImageSource(image: self.imageArray[0])])
                                 self.petImage = UIImage(data: data)
-                                
-                                
+                                print("Image 1")
                             }
-                        })
-                    }
+                            if let media1 = homeCell["image1"] {
+                                print(media1)
+                                media1.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) in
+                                    if error == nil {
+                                        if let data = data {
+                                            self.imageArray[1] = (UIImage(data: data)!)
+                                            self.slideshow.setImageInputs([ImageSource(image: self.imageArray[0]), ImageSource(image: self.imageArray[1])])
+                                            print("Image 2")
+                                        }
+                                        if let media2 = homeCell["image2"] {
+                                            print(media2)
+                                            media2.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) in
+                                                if error == nil {
+                                                    if let data = data {
+                                                        self.imageArray[2] = (UIImage(data: data)!)
+                                                        self.slideshow.setImageInputs([ImageSource(image: self.imageArray[0]), ImageSource(image: self.imageArray[1]), ImageSource(image: self.imageArray[2])])
+                                                        print("Image 3")
+                                                    }
+                                                    if let media3 = homeCell["image3"] {
+                                                        media3.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) in
+                                                            if error == nil {
+                                                                if let data = data {
+                                                                    self.imageArray[3] = (UIImage(data: data)!)
+                                                                    self.slideshow.setImageInputs([ImageSource(image: self.imageArray[0]), ImageSource(image: self.imageArray[1]), ImageSource(image: self.imageArray[2]), ImageSource(image: self.imageArray[3])])
+                                                                    print("Image 4")
+                                                                }
+                                                                if let media4 = homeCell["image4"] {
+                                                                    media4.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) in
+                                                                        if error == nil {
+                                                                            if let data = data {
+                                                                                self.imageArray[4] = (UIImage(data: data)!)
+                                                                                self.slideshow.setImageInputs([ImageSource(image: self.imageArray[0]), ImageSource(image: self.imageArray[1]), ImageSource(image: self.imageArray[2]), ImageSource(image: self.imageArray[3]), ImageSource(image: self.imageArray[4])])
+                                                                                print("Image 5")
+                                                                                print("array count is \(self.imageArray.count)")
+                                                                            }
+                                                                        }
+                                                                    })
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        }
+                    })
                 }
+                
+                // END OF WARNING!
 
             }
-            
         }
     }
     
