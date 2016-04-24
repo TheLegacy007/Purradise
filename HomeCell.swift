@@ -60,16 +60,32 @@ class HomeCell: UITableViewCell {
                 
                 print(homeCell["likesCount"])
                 likesCountLabel.text = String(homeCell["likesCount"])
-                let media = homeCell["media"] as! PFFile
-                
                 geoLocation = homeCell["geoLocation"] as! PFGeoPoint
                 
-                media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
-                    if let data = data {
-                        self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
-                        self.petImage = UIImage(data: data)
+                // Support old database
+                if let media = homeCell["media"] {
+                    media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                        if let data = data {
+                            self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
+                            self.petImage = UIImage(data: data)
+                        }
+                    })
+                }
+                
+                // New database
+                for index in 0...4 {
+                    if let media = homeCell["image\(index)"] {
+                        media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
+                            if let data = data {
+                                self.slideshow.setImageInputs([ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!),ImageSource(image: UIImage(data: data)!)])
+                                self.petImage = UIImage(data: data)
+                                
+                                
+                            }
+                        })
                     }
-                })
+                }
+
             }
             
         }

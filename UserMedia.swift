@@ -12,12 +12,19 @@ import Parse
 class UserMedia: NSObject {
 
     // Method to post user media to Parse by uploading image file
-    class func postUserImage(image: UIImage?, withObjectName objectName: String?, withRequiredAction requiredAction: String?, withLocation location: String?, withGeoLocation geoLocation: PFGeoPoint?, withGeoLocationValid geoLocationValid: Bool, withDescription description: String?, withCompletion completion: PFBooleanResultBlock?) {
+    class func postUserImage(imageArray: [UIImage]?, withObjectName objectName: String?, withRequiredAction requiredAction: String?, withLocation location: String?, withGeoLocation geoLocation: PFGeoPoint?, withGeoLocationValid geoLocationValid: Bool, withDescription description: String?, withCompletion completion: PFBooleanResultBlock?) {
         // Create Parse object PFObject
         let media = PFObject(className: "UserMedia")
         
         // Add relevant fields to the object
-        media["media"] = getPFFileFromImage(image) // PFFile column type
+//        media["media"] = getPFFileFromImage(image) // PFFile column type
+        
+        for i in imageArray!.indices {
+            let imageData = imageArray![i]
+            let imageFile = getPFFileFromImage(imageData)
+            media["image\(i)"] = imageFile
+        }
+        
         media["author"] = PFUser.currentUser() // Pointer column type that points to PFUser
         media["authorName"] = PFUser.currentUser()?.username
         media["objectName"] = objectName
@@ -33,6 +40,7 @@ class UserMedia: NSObject {
         
         // Save object (following function will save the object in Parse asynchronously)
         media.saveInBackgroundWithBlock(completion)
+        
     }
     
     // Method to post user media to Parse by uploading image file
