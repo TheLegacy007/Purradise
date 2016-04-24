@@ -216,10 +216,13 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//      let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        // let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         selectedImageView.image = editedImage
-//        resizedImage = editedImage    // Changed to an array
+        self.resizedImage.removeAll()
+        // print(editedImage)
+        resizedImage.append(editedImage)
+        // print(resizedImage.count)
         if picker.sourceType == .Camera {
             navigationItem.title = "From Camera"
         } else {

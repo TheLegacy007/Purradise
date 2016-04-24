@@ -10,16 +10,15 @@ import UIKit
 import Parse
 
 class UserMedia: NSObject {
-
+    
     // Method to post user media to Parse by uploading image file
     class func postUserImage(imageArray: [UIImage]?, withObjectName objectName: String?, withRequiredAction requiredAction: String?, withLocation location: String?, withGeoLocation geoLocation: PFGeoPoint?, withGeoLocationValid geoLocationValid: Bool, withDescription description: String?, withCompletion completion: PFBooleanResultBlock?) {
         // Create Parse object PFObject
         let media = PFObject(className: "UserMedia")
         
         // Add relevant fields to the object
-//        media["media"] = getPFFileFromImage(image) // PFFile column type
-        
-        for i in imageArray!.indices {
+        print("The number of images \(imageArray!.count)")
+        for i in 0...(imageArray!.count - 1) {
             let imageData = imageArray![i]
             let imageFile = getPFFileFromImage(imageData)
             media["image\(i)"] = imageFile
@@ -57,6 +56,29 @@ class UserMedia: NSObject {
         }
         return nil
     }
+    
+    // UNFINISHED RECURSIVE ALGORITHM
+    //    class func fetchImages(pFArray: Array<PFFile>, completion: (filling: UIImage) -> Void) {
+    //        completionfilling: (UIImage)
+    //        let count = pFArray.count
+    //        if (count == 0) {
+    //            return completion(success: true)
+    //        }
+    //        let file = pFArray[0]
+    //        let remainder = Array(pFArray[1..<count])
+    //
+    //        file.getDataInBackgroundWithBlock{(imageData: NSData?, error: NSError?) -> Void in
+    //            if error == nil {
+    //                if let image = UIImage(data: imageData!) {
+    ////                    var filling : [UIImage] = []
+    //
+    //                    self.fetchImages(remainder, filling: image, completion: completion)
+    //                }
+    //            } else {
+    //                completion(success: false)
+    //            }
+    //        }
+    //    }
 }
 
 extension UIImage {

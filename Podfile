@@ -9,7 +9,7 @@ target 'Purradise' do
    pod 'RWDropdownMenu', '~> 1.0.0'
    pod 'ImageSlideshow', '~> 0.3'
    pod 'QBImagePickerController'
-   pod 'JSQMessagesViewController', :git => 'https://github.com/galambalazs/JSQMessagesViewController.git', :branch => 'smooth-scrolling'
+   pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
    pod 'JSQSystemSoundPlayer'
 
 end

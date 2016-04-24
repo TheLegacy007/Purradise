@@ -2,7 +2,7 @@
 //  ChatViewController.swift
 //  Purradise
 //
-//  Created by Nhat Truong on 4/19/16.
+//  Created by Nguyen T Do on 4/23/16.
 //  Copyright © 2016 The Legacy 007. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import MediaPlayer
 import Parse
 import JSQMessagesViewController
 
-class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatViewController: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var timer: NSTimer = NSTimer()
     var isLoading: Bool = false
@@ -31,7 +31,6 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
     
     var senderImageUrl: String!
     var batchMessages = true
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +52,7 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        self.collectionView.collectionViewLayout.springinessEnabled = true
+        // self.collectionView.collectionViewLayout.springinessEnabled = true   // Don't do this, looks like a bug!
         timer = NSTimer.scheduledTimerWithTimeInterval(5.0, target: self, selector: #selector(ChatViewController.loadMessages), userInfo: nil, repeats: true)
     }
     
@@ -74,7 +73,7 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
             if let lastMessage = lastMessage {
                 query.whereKey(PF_CHAT_CREATEDAT, greaterThan: lastMessage.date)
             }
-//            query.includeKey(PF_CHAT_USER)    //  Not needed in our case
+            // query.includeKey(PF_CHAT_USER)
             query.orderByDescending(PF_CHAT_CREATEDAT)
             query.limit = 50
             query.findObjectsInBackgroundWithBlock({ (objects: [PFObject]?, error: NSError?) -> Void in
@@ -85,11 +84,12 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
                     }
                     if objects!.count > 0 {
                         self.finishReceivingMessage()
-      //                  self.scrollToBottomAnimated(false)
+                        self.scrollToBottomAnimated(true)
                     }
                     self.automaticallyScrollsToMostRecentMessage = true
                 } else {
-//                    ProgressHUD.showError("Network error")
+                    //                    MBProgressHUD.show(MBProgressHUD)
+                    //                    ProgressHUD.showError("Network error")
                     print("Network error")
                 }
                 self.isLoading = false;
@@ -130,11 +130,10 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
         var pictureFile: PFFile!
         
         if let picture = picture {
-            let text = "[Picture message]"
             pictureFile = PFFile(name: "picture.jpg", data: UIImageJPEGRepresentation(picture, 0.6)!)
             pictureFile.saveInBackgroundWithBlock({ (suceeded: Bool, error: NSError?) -> Void in
                 if error != nil {
-//                    ProgressHUD.showError("Picture save error")
+                    //                    ProgressHUD.showError("Picture save error")
                     print("Picture save error")
                 }
             })
@@ -144,7 +143,7 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
         object[PF_CHAT_USER] = PFUser.currentUser()?.username
         object[PF_CHAT_GROUPID] = self.groupId
         object[PF_CHAT_TEXT] = text
-
+        
         if let pictureFile = pictureFile {
             object[PF_CHAT_PICTURE] = pictureFile
         }
@@ -153,12 +152,12 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.loadMessages()
             } else {
-//                ProgressHUD.showError("Network error")
+                //                ProgressHUD.showError("Network error")
                 print("Picture save error")
             }
         }
         
-//        PushNotication.sendPushNotification(groupId, text: text)    // NOT NOW
+        //        PushNotication.sendPushNotification(groupId, text: text)    // NOT NOW
         Messages.updateMessageCounter(groupId, lastMessage: text)
         
         self.finishSendingMessage()
@@ -173,8 +172,15 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
     override func didPressAccessoryButton(sender: UIButton!) {
         self.view.endEditing(true)
         
-        let action = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Take photo", "Choose existing photo", "Choose existing video")
-        action.showInView(self.view)
+        let accessoryAction = UIAlertController(title: nil, message: "Choose one", preferredStyle: UIAlertControllerStyle.Alert)
+        accessoryAction.addAction(UIAlertAction(title: "Choose existing photo", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) in
+            Camera.shouldStartPhotoLibrary(self, canEdit: true)
+        }))
+        accessoryAction.addAction(UIAlertAction(title: "Take photo", style: UIAlertActionStyle.Default, handler: { (action: UIAlertAction) in
+            Camera.shouldStartCamera(self, canEdit: true, frontFacing: false)
+        }))
+        accessoryAction.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        presentViewController(accessoryAction, animated: true, completion: nil)
     }
     
     // MARK: - JSQMessages CollectionView DataSource
@@ -234,6 +240,7 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
         
         let message = self.messages[indexPath.item]
+        // print("Nguyen debugging", message)
         if message.senderId == self.senderId {
             cell.textView?.textColor = UIColor.whiteColor()
         } else {
@@ -281,34 +288,19 @@ class ChatViewController: JSQMessagesViewController, UIActionSheetDelegate, UIIm
         print("didTapAvatarImageview")
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
-        let message = self.messages[indexPath.item]
-        if message.isMediaMessage {
-            if let mediaItem = message.media as? JSQVideoMediaItem {
-                let moviePlayer = MPMoviePlayerViewController(contentURL: mediaItem.fileURL)
-                self.presentMoviePlayerViewControllerAnimated(moviePlayer)
-                moviePlayer.moviePlayer.play()
-            }
-        }
-    }
+    //    override func collectionView(collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAtIndexPath indexPath: NSIndexPath!) {
+    //        let message = self.messages[indexPath.item]
+    //        if message.isMediaMessage {
+    //            if let mediaItem = message.media as? JSQVideoMediaItem {
+    //                let moviePlayer = MPMoviePlayerViewController(contentURL: mediaItem.fileURL)
+    //                self.presentMoviePlayerViewControllerAnimated(moviePlayer)
+    //                moviePlayer.moviePlayer.play()
+    //            }
+    //        }
+    //    }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, didTapCellAtIndexPath indexPath: NSIndexPath!, touchLocation: CGPoint) {
         print("didTapCellAtIndexPath")
-    }
-    
-    // MARK: - UIActionSheetDelegate
-    
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex != actionSheet.cancelButtonIndex {
-            if buttonIndex == 1 {
-                Camera.shouldStartCamera(self, canEdit: true, frontFacing: true)
-            } else if buttonIndex == 2 {
-                Camera.shouldStartPhotoLibrary(self, canEdit: true)
-            } else if buttonIndex == 3 {
-                Camera.shouldStartVideoLibrary(self, canEdit: true)
-            }
-        }
- 
     }
     
     // MARK: - UIImagePickerControllerDelegate
