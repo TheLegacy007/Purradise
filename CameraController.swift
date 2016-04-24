@@ -12,9 +12,11 @@ import CoreLocation
 import Parse
 import DGActivityIndicatorView
 import QBImagePickerController
+import ImageSlideshow
 
 class CameraController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, QBImagePickerControllerDelegate {
     
+    @IBOutlet weak var slideshow: ImageSlideshow!
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var buttonPictureAndCamera: UIButton!
     @IBOutlet weak var location: UITextField!
@@ -44,6 +46,12 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        slideshow.backgroundColor = UIColor.whiteColor()
+        slideshow.slideshowInterval = 5.0
+        slideshow.pageControlPosition = PageControlPosition.InsideScrollView
+        slideshow.pageControl.currentPageIndicatorTintColor = UIColor.whiteColor();
+        slideshow.pageControl.pageIndicatorTintColor = UIColor.lightGrayColor();
         
         // Make up
         for eachButton in makeupButton {
@@ -239,16 +247,27 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let manager = PHImageManager.defaultManager()
         self.resizedImage.removeAll()
         print("assets is \(assets.count)")
-        for asset in assets {
-            manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: nil, resultHandler: { (result, info) in
-
-                self.selectedImageView.image = result
-                self.resizedImage.append(result!)
-                print("You selected \(self.resizedImage.count)")
-            })
-           
-        }
         
+        let option = PHImageRequestOptions()
+//        option.synchronous = true
+        option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+        option.deliveryMode =  PHImageRequestOptionsDeliveryMode.HighQualityFormat
+        option.version = PHImageRequestOptionsVersion.Current
+        option.networkAccessAllowed = true
+        option.normalizedCropRect = CGRect(x: 0, y: 0, width: 375, height: 375)
+        for asset in assets {
+            manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: option, resultHandler: { (result, info) in
+                
+            
+                self.resizedImage.append(result!)
+                self.slideshow.setImageInputs([ImageSource(image: self.resizedImage[0]),ImageSource(image: self.resizedImage[1]),ImageSource(image: self.resizedImage[2])])
+                print("You selected \(self.resizedImage.count)")
+
+
+            })
+        
+        }
+
         dismissViewControllerAnimated(true, completion: nil)
 
     }
@@ -272,7 +291,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         picker.maximumNumberOfSelection = 5
         picker.showsNumberOfSelectedAssets = true
         picker.delegate = self
-        
+        picker.prompt = "Select photos"
         self.presentViewController(picker, animated: true, completion: nil)
     }
     

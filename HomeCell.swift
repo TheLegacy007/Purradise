@@ -18,9 +18,9 @@ protocol MapDelegate {
 
 class HomeCell: UITableViewCell {
     
+    @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var subdescriptionLabel: UILabel!
     @IBOutlet weak var tiltleSubView: UIView!
-    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var backView: UIView!
     var trayOriginalCenter: CGPoint!
     var trayCenterWhenClosed: CGPoint!
@@ -34,7 +34,6 @@ class HomeCell: UITableViewCell {
         data["geoLocation"] = geoLocation
         data["petImage"] = petImage
         
-        print("onMap")
         self.openMap(data)
 
 
@@ -71,7 +70,7 @@ class HomeCell: UITableViewCell {
                 slideshow.pageControl.currentPageIndicatorTintColor = UIColor.whiteColor();
                 slideshow.pageControl.pageIndicatorTintColor = UIColor.lightGrayColor();
                 
-                print(homeCell["likesCount"])
+//                print(homeCell["likesCount"])
                 likesCountLabel.text = String(homeCell["likesCount"])
                 geoLocation = homeCell["geoLocation"] as! PFGeoPoint
                 descriptionLabel.text = homeCell["description"] as? String
@@ -283,14 +282,14 @@ class HomeCell: UITableViewCell {
         trayCenterWhenOpen = CGPoint(x: trayView.center.x, y:trayView.center.y - 350)
         trayCenterWhenClosed = trayView.center
        
-        tiltleSubView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
-        
+//        tiltleSubView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
+        tiltleSubView.backgroundColor = UIColor.yellowColor()
         backView.hidden = true
         backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
         
         trayView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0)
-        descriptionLabel.textColor = UIColor.whiteColor()
-        subdescriptionLabel.textColor = UIColor.whiteColor()
+//        descriptionLabel.textColor = UIColor.whiteColor()
+        subdescriptionLabel.textColor = UIColor.blackColor()
         subdescriptionLabel.sizeToFit()
         
         let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
