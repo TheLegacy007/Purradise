@@ -88,6 +88,9 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
             dvc.petImage = petImage
             print("prepare for toMapSegue")
 
+        } else if segue.identifier == "messageViewSegue" {
+ //           let dvc = segue.destinationViewController as! MessagesViewController
+            
         }
         print("prepare for segue")
     }
@@ -140,9 +143,13 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
     
     func openChatMessages(sender: UIBarButtonItem){
         print("open chat")
-//        performSegueWithIdentifier("toChatSegue", sender: self)
-
+        performSegueWithIdentifier("messageViewSegue", sender: self)
     }
+    
+    @IBAction func openChatMessagesView(sender: UIBarButtonItem) {
+        
+    }
+    
     
     func openFilter(sender: UIBarButtonItem){
         print("open filter")

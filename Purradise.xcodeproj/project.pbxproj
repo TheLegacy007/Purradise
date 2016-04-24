@@ -30,6 +30,8 @@
 		06E2A2211CC6325D0063D55C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E2A2201CC6325D0063D55C /* ChatViewController.swift */; };
 		7FE8A3E8401696FD30E19EFA /* Pods_Purradise.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21D3AB9131CAB6FBBF0EE780 /* Pods_Purradise.framework */; };
 		CB0FF5991CC4B54F00326004 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0FF5981CC4B54F00326004 /* DetailsViewController.swift */; };
+		CB17CFFD1CCD379900099935 /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB17CFFC1CCD379900099935 /* MessagesViewController.swift */; };
+		CB17CFFF1CCD437E00099935 /* MessagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB17CFFE1CCD437E00099935 /* MessagesCell.swift */; };
 		CB1870C91CC6A37D002F6A09 /* FilterSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */; };
 		CB4603C61CBBF5F600FA6B97 /* UserMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */; };
 		CB4603C81CBD6DD100FA6B97 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */; };
@@ -66,6 +68,8 @@
 		7CEEE36BC99B64527A595EA5 /* Pods-Purradise.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Purradise.release.xcconfig"; path = "Pods/Target Support Files/Pods-Purradise/Pods-Purradise.release.xcconfig"; sourceTree = "<group>"; };
 		C054E324F197A6BF4B28F51D /* Pods-Purradise.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Purradise.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Purradise/Pods-Purradise.debug.xcconfig"; sourceTree = "<group>"; };
 		CB0FF5981CC4B54F00326004 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = Purradise/DetailsViewController.swift; sourceTree = "<group>"; };
+		CB17CFFC1CCD379900099935 /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		CB17CFFE1CCD437E00099935 /* MessagesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCell.swift; sourceTree = "<group>"; };
 		CB1870C81CC6A37D002F6A09 /* FilterSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSettings.swift; sourceTree = "<group>"; };
 		CB4603C51CBBF5F600FA6B97 /* UserMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMedia.swift; sourceTree = "<group>"; };
 		CB4603C71CBD6DD100FA6B97 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -150,6 +154,7 @@
 				0635E11F1CC52D84009150C5 /* FilterViewController.swift */,
 				06E2A2201CC6325D0063D55C /* ChatViewController.swift */,
 				06D3C5F61CCB85230026C230 /* MapViewController.swift */,
+				CB17CFFC1CCD379900099935 /* MessagesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				06A4044D1CB950DB00BC9F2C /* HomeCell.swift */,
 				06D3C5F31CCA7FD30026C230 /* HomeHeaderCell.swift */,
 				06A664AD1CC22CC700667A53 /* PreferencesCell.swift */,
+				CB17CFFE1CCD437E00099935 /* MessagesCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -324,6 +330,7 @@
 				06A4043E1CB93A5100BC9F2C /* LoginViewController.swift in Sources */,
 				06D3C5FB1CCB91CA0026C230 /* PhotoAnnotation.swift in Sources */,
 				06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */,
+				CB17CFFF1CCD437E00099935 /* MessagesCell.swift in Sources */,
 				0635E1241CC52F2A009150C5 /* HomeViewController.swift in Sources */,
 				06D3C5F71CCB85230026C230 /* MapViewController.swift in Sources */,
 				06D3C5F41CCA7FD30026C230 /* HomeHeaderCell.swift in Sources */,
@@ -332,6 +339,7 @@
 				CB4603C61CBBF5F600FA6B97 /* UserMedia.swift in Sources */,
 				06A404491CB94F6900BC9F2C /* User.swift in Sources */,
 				0635E1201CC52D84009150C5 /* FilterViewController.swift in Sources */,
+				CB17CFFD1CCD379900099935 /* MessagesViewController.swift in Sources */,
 				06A4044E1CB950DB00BC9F2C /* HomeCell.swift in Sources */,
 				06E2A2211CC6325D0063D55C /* ChatViewController.swift in Sources */,
 				061786DD1CBA323700445DB2 /* CameraController.swift in Sources */,
