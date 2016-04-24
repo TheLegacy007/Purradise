@@ -205,7 +205,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                     self.activityIndicatorView.stopAnimating()
                     self.activityIndicatorView.removeFromSuperview()
                     //self.performSegueWithIdentifier("feed", sender: nil)
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                    
                 }
             })
         } else {
@@ -221,6 +221,8 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             alertVC.addAction(okAction)
             presentViewController(alertVC, animated: true, completion: nil)
         }
+        // Don't wait for the network (insert images into the post directly as we had the images locally).
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -247,7 +249,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         let manager = PHImageManager.defaultManager()
         self.resizedImage.removeAll()
         print("assets is \(assets.count)")
-        
         let option = PHImageRequestOptions()
 //        option.synchronous = true
         option.resizeMode = PHImageRequestOptionsResizeMode.Exact
@@ -257,19 +258,16 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         option.normalizedCropRect = CGRect(x: 0, y: 0, width: 375, height: 375)
         for asset in assets {
             manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: option, resultHandler: { (result, info) in
-                
-            
                 self.resizedImage.append(result!)
-                self.slideshow.setImageInputs([ImageSource(image: self.resizedImage[0]),ImageSource(image: self.resizedImage[1]),ImageSource(image: self.resizedImage[2])])
                 print("You selected \(self.resizedImage.count)")
-
-
             })
+        }
         
+        for i in 0..<resizedImage.count {
+            self.slideshow.setImageInputs([ImageSource(image: self.resizedImage[i])])
         }
 
         dismissViewControllerAnimated(true, completion: nil)
-
     }
     
     func qb_imagePickerControllerDidCancel(imagePickerController: QBImagePickerController!) {
