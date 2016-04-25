@@ -6,14 +6,6 @@
 //  Copyright © 2016 The Legacy 007. All rights reserved.
 //
 
-//
-//  MessagesViewController.swift
-//
-//
-//  Created by Jesse Hu on 3/3/15.
-//
-//
-
 import UIKit
 import Parse
 
@@ -21,21 +13,17 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
     
     var messages = [PFObject]()
     
-    @IBOutlet var composeButton: UIBarButtonItem!
-    @IBOutlet var emptyView: UIView!
+    @IBOutlet weak var composeButton: UIBarButtonItem!
+    @IBOutlet weak var emptyView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "cleanup", name: NOTIFICATION_USER_LOGGED_OUT, object: nil)
-        
-        // NSNotificationCenter.defaultCenter().addObserver(self, selector: "loadMessages", name: "reloadMessages", object: nil)
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(MessagesViewController.loadMessages), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView?.addSubview(self.refreshControl!)
         
-//        self.emptyView?.hidden = true
+        self.emptyView?.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -48,12 +36,15 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         }
     }
     
+    @IBAction func onTapCancelButton(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // MARK: - Backend methods
     
     func loadMessages() {
         let query = PFQuery(className: PF_MESSAGES_CLASS_NAME)
         query.whereKey(PF_MESSAGES_USER, equalTo: (PFUser.currentUser()?.username!)!)
-//        query.includeKey(PF_MESSAGES_LASTUSER)     this is to get the user collum
         query.orderByDescending(PF_MESSAGES_UPDATEDACTION)
         query.findObjectsInBackgroundWithBlock{ (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -73,7 +64,7 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
     // MARK: - Helper methods
     
     func updateEmptyView() {
-//        self.emptyView?.hidden = (self.messages.count != 0)
+        self.emptyView?.hidden = (self.messages.count != 0)
     }
     
     func updateTabCounter() {
@@ -81,8 +72,6 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         for message in self.messages {
             total += message[PF_MESSAGES_COUNTER]!.integerValue
         }
-        let item = self.tabBarController!.tabBar.items![1]
-        item.badgeValue = (total == 0) ? nil : "\(total)"
     }
     
     // MARK: - User actions
@@ -98,9 +87,8 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         self.updateEmptyView()
     }
     
-    @IBAction func compose(sender: UIBarButtonItem) {
-        let actionSheet = UIActionSheet(title: nil, delegate: self, cancelButtonTitle: "Cancel", destructiveButtonTitle: nil, otherButtonTitles: "Single recipient", "Multiple recipients", "Address Book", "Facebook Friends")
-        actionSheet.showFromTabBar(self.tabBarController!.tabBar)
+    @IBAction func onTapComposeButton(sender: UIBarButtonItem) {
+        // self.performSegueWithIdentifier("selectSingleSegue", sender: self)
     }
     
     // MARK: - Prepare for segue to chatVC
@@ -111,31 +99,9 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
             chatVC.hidesBottomBarWhenPushed = true
             let groupId = sender as! String
             chatVC.groupId = groupId
-//        } else if segue.identifier == "selectSingleSegue" {
-//            let selectSingleVC = segue.destinationViewController.topViewController as! SelectSingleViewController
-//            selectSingleVC.delegate = self
-//        } else if segue.identifier == "addressBookSegue" {
-//            let addressBookVC = segue.destinationViewController.topViewController as! AddressBookViewController
-//            addressBookVC.delegate = self
-        }
-    }
-    
-    // MARK: - UIActionSheetDelegate
-    
-    func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
-        if buttonIndex != actionSheet.cancelButtonIndex {
-            switch buttonIndex {
-            case 1:
-                self.performSegueWithIdentifier("selectSingleSegue", sender: self)
-            case 2:
-                self.performSegueWithIdentifier("selectMultipleSegue", sender: self)
-            case 3:
-                self.performSegueWithIdentifier("addressBookSegue", sender: self)
-            case 4:
-                self.performSegueWithIdentifier("facebookFriendsSegue", sender: self)
-            default:
-                return
-            }
+            //        } else if segue.identifier == "selectSingleSegue" {
+            //            let selectSingleVC = segue.destinationViewController.topViewController as! SelectSingleViewController
+            //            selectSingleVC.delegate = self
         }
     }
     
@@ -169,7 +135,7 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("messagesCell") as! MessagesCell
-        // cell.bindData(self.messages[indexPath.row])
+        cell.bindData(self.messages[indexPath.row])
         return cell
     }
     
