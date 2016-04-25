@@ -34,8 +34,6 @@ class UserViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = PFUser.currentUser()?.username
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
         let username = PFUser.currentUser()!.username!
         print("username ", username)
@@ -53,7 +51,9 @@ class UserViewController: UIViewController {
                 self.collectionView.reloadData()
             }
         }
-        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+  
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,8 +81,8 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let grid = collectionView.dequeueReusableCellWithReuseIdentifier("UserCollectionViewCell", forIndexPath: indexPath) as! UserCollectionViewCell
-                let userMedia = self.cloudData[indexPath.item] as PFObject
-                grid.userCell = userMedia
+//                let userMedia = self.cloudData[indexPath.section] as PFObject
+//                grid.userCell = userMedia
         
         return grid
     }

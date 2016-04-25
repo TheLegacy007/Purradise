@@ -68,6 +68,10 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
         filterSettings.objectName = filter["objectName"] as! String
         filterSettings.requiredAction = filter["requiredAction"] as! String
         filterSettings.gender = filter["gender"] as! String
+        filterSettings.geoCurrentLocation = filter["geoLocation"] as! PFGeoPoint
+        filterSettings.geoCurrentLocationValid = filter["geoLocationValid"] as! Bool
+        filterSettings.geoRadius = filter["geoRadius"] as! Double
+        
         print("delegate 2")
     }
 
@@ -124,10 +128,12 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
         }
         if filterSettings.geoRadius != 30000.0 {
             // To be done
+            query.whereKey("geoLocation", nearGeoPoint: filterSettings.geoCurrentLocation, withinKilometers: filterSettings.geoRadius)
+
         }
         
-        //        let userGeoPoint = PFGeoPoint(latitude: 10.7726, longitude: 106.698)
-        //        query.whereKey("geoLocation", nearGeoPoint: userGeoPoint!, withinKilometers: 1.0)
+//                let userGeoPoint = PFGeoPoint(latitude: 10.7726, longitude: 106.698)
+//                query.whereKey("geoLocation", nearGeoPoint: userGeoPoint, withinKilometers: 1.0)
         
         query.cachePolicy = .NetworkElseCache
         
