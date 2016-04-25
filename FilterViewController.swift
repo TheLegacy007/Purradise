@@ -16,7 +16,12 @@ protocol FilterDelegate: class {
 
 
 class FilterViewController: UITableViewController {
-    
+    lazy var locationManager = CLLocationManager()
+    var latitude: Double!
+    var longitude: Double!
+    var geoLocation = PFGeoPoint()
+    var geoLocationValid = false
+
     weak var delegate: FilterDelegate!
     var filters = FilterSettings.init()
 
@@ -32,7 +37,9 @@ class FilterViewController: UITableViewController {
         filter["requiredAction"] = filters.requiredAction
         filter["gender"] = filters.gender
         filter["geoRadius"] = filters.geoRadius
-
+        filter["geoLocation"] = filters.geoCurrentLocation
+        filter["geoLocationValid"] = filters.geoCurrentLocationValid
+        
         delegate?.filterController(self, didUpdateFilters: filter)
 
         navigationController?.popViewControllerAnimated(true)
@@ -46,6 +53,8 @@ class FilterViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.reloadData()
         
+        locationManager.delegate = self
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -134,15 +143,15 @@ class FilterViewController: UITableViewController {
 
         let Distance: [RWDropdownMenuItem] =
             [RWDropdownMenuItem(text: "5 KM", image: nil, action: {
-                 self.filters.geoRadius = 5000.0
+                 self.filters.geoRadius = 5.0
                 tableView.reloadData()
             }),
              RWDropdownMenuItem(text: "10 KM", image: nil, action: {
-                 self.filters.geoRadius = 10000.0
+                 self.filters.geoRadius = 10.0
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "20 KM", image: nil, action: {
-                 self.filters.geoRadius = 20000.0
+                 self.filters.geoRadius = 20.0
                 tableView.reloadData()
              }),
              RWDropdownMenuItem(text: "All", image: nil, action: {
@@ -162,6 +171,9 @@ class FilterViewController: UITableViewController {
         case 3:
             RWDropdownMenu.presentFromViewController(self, withItems: Distance, align: .Center, style: self.menuStyle, navBarImage: nil, completion:nil)
 
+            self.filters.geoCurrentLocation = geoLocation
+            self.filters.geoCurrentLocationValid = geoLocationValid
+            
         case 4:
             self.filters.objectName = "All"
             self.filters.requiredAction = "All"
@@ -260,9 +272,9 @@ class FilterViewController: UITableViewController {
             switch self.filters.geoRadius {
             case 30000.0:
                 cell.detailTextLabel?.text = "All"
-            case 5000.0:
+            case 5.0:
                 cell.detailTextLabel?.text = "5 KM"
-            case 10000.0:
+            case 10.0:
                 cell.detailTextLabel?.text = "10 KM"
             default:
                 cell.detailTextLabel?.text = "20 KM"
@@ -283,50 +295,33 @@ class FilterViewController: UITableViewController {
 
         return cell
     }
+        
+}
+
+extension FilterViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            print("Start updating current location")
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.distanceFilter = 200
+
+            locationManager.startUpdatingLocation()
+            
+
+        }
+    }
     
-       /*
-     // Override to support conditional editing of the table view.
-     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-     if editingStyle == .Delete {
-     // Delete the row from the data source
-     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-     } else if editingStyle == .Insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            latitude = location.coordinate.latitude
+            longitude = location.coordinate.longitude
+            geoLocationValid = true
+            geoLocation = PFGeoPoint(latitude: latitude, longitude: longitude)
+            
+            print("geo lat", latitude)
+            print("geo long", longitude)
+
+        }
+    }
 }
