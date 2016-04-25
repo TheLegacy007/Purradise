@@ -7,18 +7,32 @@
 //
 
 import UIKit
+import Parse
+import JSQMessagesViewController
 
 class MessagesCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    
+    @IBOutlet var descriptionLabel: UILabel!
+    @IBOutlet var lastMessageLabel: UILabel!
+    @IBOutlet var timeElapsedLabel: UILabel!
+    @IBOutlet var counterLabel: UILabel!
+    
+    func bindData(message: PFObject) {
+        
+        descriptionLabel.text = message[PF_MESSAGES_DESCRIPTION] as? String
+        lastMessageLabel.text = message[PF_MESSAGES_LASTMESSAGE] as? String
+        
+        let seconds = NSDate().timeIntervalSinceDate(message[PF_MESSAGES_UPDATEDACTION] as! NSDate)
+//        timeElapsedLabel.text = Utilities.timeElapsed(seconds)
+        let dateText = JSQMessagesTimestampFormatter.sharedFormatter().relativeDateForDate(message[PF_MESSAGES_UPDATEDACTION] as? NSDate)
+        if dateText == "Today" {
+            timeElapsedLabel.text = JSQMessagesTimestampFormatter.sharedFormatter().timeForDate(message[PF_MESSAGES_UPDATEDACTION] as? NSDate)
+        } else {
+            timeElapsedLabel.text = dateText
+        }
+        
+        let counter = message[PF_MESSAGES_COUNTER]!.integerValue
+        counterLabel.text = (counter == 0) ? "" : "\(counter) new"
     }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
 }

@@ -50,7 +50,7 @@ class UserViewController: UIViewController {
             if object != nil && object?.count != 0{
                 self.cloudData = object!
                 print(object)
-                self.collectionView.reloadData()
+ //               self.collectionView.reloadData()
             }
         }
         
@@ -64,7 +64,7 @@ class UserViewController: UIViewController {
     
 }
 
-extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return sectionInsets
@@ -81,8 +81,9 @@ extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegate
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let grid = collectionView.dequeueReusableCellWithReuseIdentifier("UserCollectionViewCell", forIndexPath: indexPath) as! UserCollectionViewCell
-                let userMedia = self.cloudData[indexPath.item] as PFObject
-                grid.userCell = userMedia
+        print(indexPath.item)
+ //               let userMedia = self.cloudData[indexPath.item] as PFObject
+//                grid.userCell = userMedia
         
         return grid
     }

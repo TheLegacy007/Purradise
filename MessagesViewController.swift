@@ -6,14 +6,6 @@
 //  Copyright © 2016 The Legacy 007. All rights reserved.
 //
 
-//
-//  MessagesViewController.swift
-//
-//
-//  Created by Jesse Hu on 3/3/15.
-//
-//
-
 import UIKit
 import Parse
 
@@ -35,7 +27,7 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         self.refreshControl!.addTarget(self, action: #selector(MessagesViewController.loadMessages), forControlEvents: UIControlEvents.ValueChanged)
         self.tableView?.addSubview(self.refreshControl!)
         
-//        self.emptyView?.hidden = true
+        self.emptyView?.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -48,12 +40,15 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         }
     }
     
+    @IBAction func onTapCancel(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     // MARK: - Backend methods
     
     func loadMessages() {
         let query = PFQuery(className: PF_MESSAGES_CLASS_NAME)
         query.whereKey(PF_MESSAGES_USER, equalTo: (PFUser.currentUser()?.username!)!)
-//        query.includeKey(PF_MESSAGES_LASTUSER)     this is to get the user collum
         query.orderByDescending(PF_MESSAGES_UPDATEDACTION)
         query.findObjectsInBackgroundWithBlock{ (objects: [PFObject]?, error: NSError?) -> Void in
             if error == nil {
@@ -73,7 +68,7 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
     // MARK: - Helper methods
     
     func updateEmptyView() {
-//        self.emptyView?.hidden = (self.messages.count != 0)
+        self.emptyView?.hidden = (self.messages.count != 0)
     }
     
     func updateTabCounter() {
@@ -81,8 +76,6 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         for message in self.messages {
             total += message[PF_MESSAGES_COUNTER]!.integerValue
         }
-        let item = self.tabBarController!.tabBar.items![1]
-        item.badgeValue = (total == 0) ? nil : "\(total)"
     }
     
     // MARK: - User actions
@@ -169,7 +162,7 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("messagesCell") as! MessagesCell
-        // cell.bindData(self.messages[indexPath.row])
+         cell.bindData(self.messages[indexPath.row])
         return cell
     }
     
@@ -193,5 +186,5 @@ class MessagesViewController: UITableViewController, UIActionSheetDelegate {
         let message = self.messages[indexPath.row] as PFObject
         self.openChat(message[PF_MESSAGES_GROUPID] as! String)
     }
-    
+
 }
