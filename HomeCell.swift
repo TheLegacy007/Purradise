@@ -64,6 +64,10 @@ class HomeCell: UITableViewCell {
         didSet {
             if let homeCell = homeCell {
                 
+                backView.hidden = true
+                backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
+
+                
                 slideshow.backgroundColor = UIColor.whiteColor()
                 slideshow.slideshowInterval = 5.0
                 slideshow.pageControlPosition = PageControlPosition.InsideScrollView
@@ -239,15 +243,12 @@ class HomeCell: UITableViewCell {
         if sender.state == UIGestureRecognizerState.Began {
             self.backView.hidden = false
             trayOriginalCenter = trayView.center
-            print("Gesture began at: \(point)")
         } else if sender.state == UIGestureRecognizerState.Changed {
             
             trayView.center = CGPoint(x: trayOriginalCenter.x, y: trayOriginalCenter.y + translation.y)
             self.backView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
 
-            print("Gesture changed at: \(point)")
         } else if sender.state == UIGestureRecognizerState.Ended {
-            print("Gesture ended at: \(point)")
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 1, options: [], animations: { () -> Void in
                 if velocity.y > 0 {
                     self.trayView.center = self.trayCenterWhenClosed
@@ -256,6 +257,9 @@ class HomeCell: UITableViewCell {
 
                 } else if velocity.y == 0 {
                     self.backView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+                } else if velocity.y < 0 {
+                    self.trayView.center = self.trayCenterWhenOpen
+
                 }
 
                 }, completion: { (Bool) -> Void in
@@ -304,6 +308,8 @@ class HomeCell: UITableViewCell {
         shareButton.center = CGPoint(x: 310, y: 16)
         shareButton.shareContent = content
         trayView.addSubview(shareButton)
+        self.trayView.center = self.trayCenterWhenClosed
+
     
     }
 

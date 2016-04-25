@@ -29,8 +29,8 @@ class HomeHeaderCell: UITableViewCell {
         didSet {
             if let homeHeaderCell = homeHeaderCell {
                 
-                let action = homeHeaderCell["objectName"] as! String
-                switch action {
+                let type = homeHeaderCell["objectName"] as! String
+                switch type {
                     case "Dog": actionImage.image = UIImage(named: "dog-bone")
                     case "Cat": actionImage.image = UIImage(named: "fish-bone")
                     case "Other": actionImage.image = nil

@@ -11,7 +11,12 @@ import Parse
 import FBSDKLoginKit
 
 class UserViewController: UIViewController {
-
+    
+    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
+    
+    var cloudData: [PFObject]!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBAction func onLogout(sender: UIBarButtonItem) {
         PFUser.logOutInBackgroundWithBlock { (error:NSError?) -> Void in
             if error != nil {
@@ -27,25 +32,58 @@ class UserViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.title = PFUser.currentUser()?.username
-        // Do any additional setup after loading the view.
-    }
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        let username = PFUser.currentUser()!.username!
+        print("username ", username)
+        let query = PFQuery(className: "UserMedia")
+        query.orderByDescending("createdAt")
+        query.whereKey("authorName", equalTo: username)
+        
+        
+        query.cachePolicy = .NetworkElseCache
 
+        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
+            if object != nil && object?.count != 0{
+                self.cloudData = object!
+                print(object)
+                self.collectionView.reloadData()
+            }
+        }
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+    
+    func collectionView(collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return sectionInsets
     }
-    */
-
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // Set the number of items in your collection view.
+        return 6
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let grid = collectionView.dequeueReusableCellWithReuseIdentifier("UserCollectionViewCell", forIndexPath: indexPath) as! UserCollectionViewCell
+                let userMedia = self.cloudData[indexPath.item] as PFObject
+                grid.userCell = userMedia
+        
+        return grid
+    }
 }
