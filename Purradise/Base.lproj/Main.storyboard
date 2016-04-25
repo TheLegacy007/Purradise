@@ -126,7 +126,7 @@
                                                     </variation>
                                                 </view>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oF-F3-msP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="377"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="418"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZA-7K-jgI">
@@ -494,8 +494,39 @@
                         <viewControllerLayoutGuide type="bottom" id="wy8-tD-ygp"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Csz-jf-PwY">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1rc-Ol-Klt">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="buG-3c-rVT">
+                                    <size key="itemSize" width="150" height="150"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UserCollectionViewCell" id="xpO-RV-9D4" customClass="UserCollectionViewCell" customModule="Purradise" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="64" width="150" height="150"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="4ai-cc-h7t">
+                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="petImage" destination="4ai-cc-h7t" id="hoO-dL-Z8f"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="User" id="EEy-GX-i0K">
@@ -505,14 +536,15 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="collectionView" destination="1rc-Ol-Klt" id="ukt-Ji-yYJ"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="toLoginSegue" id="4Bz-fu-hJJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AxN-W9-A0b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1543" y="1118"/>
+            <point key="canvasLocation" x="1542.5" y="1117.5"/>
         </scene>
         <!--Camera Controller-->
         <scene sceneID="BJj-dd-EbV">
@@ -534,6 +566,10 @@
                                     <constraint firstAttribute="height" constant="1" id="Uij-e7-xwr"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlb-9u-4wq" customClass="ImageSlideshow" customModule="ImageSlideshow">
+                                <rect key="frame" x="8" y="72" width="359" height="359"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UXy-23-Ruo">
                                 <rect key="frame" x="8" y="72" width="359" height="359"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -541,10 +577,6 @@
                                     <constraint firstAttribute="width" secondItem="UXy-23-Ruo" secondAttribute="height" multiplier="1:1" id="Znc-ZB-SBP"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hlb-9u-4wq" customClass="ImageSlideshow" customModule="ImageSlideshow">
-                                <rect key="frame" x="8" y="72" width="359" height="359"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7AZ-Dd-reM">
                                 <rect key="frame" x="8" y="72" width="359" height="359"/>
                                 <gestureRecognizers/>
@@ -624,14 +656,13 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kha-2a-eDK">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kha-2a-eDK">
                                         <rect key="frame" x="337" y="4" width="30" height="29"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="30" id="J5W-GL-X9q"/>
                                             <constraint firstAttribute="height" constant="29" id="Y82-CN-iMm"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <state key="normal" title="📡"/>
+                                        <state key="normal" image="location"/>
                                         <connections>
                                             <action selector="getLocation:" destination="loY-ZC-Gpf" eventType="touchUpInside" id="yaO-jX-3cv"/>
                                         </connections>
@@ -847,6 +878,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rrz-jK-FIw" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="user" id="dMx-bb-cYR"/>
                     <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NLP-h0-vVW">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -884,6 +916,7 @@
         <image name="chat" width="32" height="32"/>
         <image name="down_arrow" width="20" height="14"/>
         <image name="home" width="32" height="32"/>
+        <image name="location" width="50" height="50"/>
         <image name="map" width="512" height="512"/>
         <image name="paw" width="32" height="32"/>
         <image name="user" width="32" height="32"/>
