@@ -33,10 +33,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let navigationBarAppearace = UINavigationBar.appearance()
         
-        navigationBarAppearace.tintColor = uicolorFromHex(0xffd700)
-//        navigationBarAppearace.barTintColor = uicolorFromHex(0x00cd66)
+
+        let navigationBarAppearace = UINavigationBar.appearance()
+
+        navigationBarAppearace.tintColor = UIColor.whiteColor()
+        navigationBarAppearace.barTintColor = uicolorFromHex(0x009acd)
+        navigationBarAppearace.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationBarAppearace.shadowImage = UIImage()
+
+        navigationBarAppearace.translucent = false
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         

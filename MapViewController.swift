@@ -68,7 +68,7 @@ extension MapViewController: MKMapViewDelegate{
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
         
         let resizeRenderImageView = UIImageView(frame: CGRectMake(0, 0, 45, 45))
-        resizeRenderImageView.layer.borderColor = UIColor.redColor().CGColor
+        resizeRenderImageView.layer.borderColor = UIColor.whiteColor().CGColor
         resizeRenderImageView.layer.masksToBounds = false
         resizeRenderImageView.layer.cornerRadius = resizeRenderImageView.frame.height/2
         resizeRenderImageView.clipsToBounds = true

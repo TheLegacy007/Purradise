@@ -132,7 +132,7 @@
                                                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yZA-7K-jgI">
                                                     <rect key="frame" x="8" y="379" width="359" height="138"/>
                                                     <subviews>
-                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="N7H-LO-gMG">
+                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="menu" translatesAutoresizingMaskIntoConstraints="NO" id="N7H-LO-gMG">
                                                             <rect key="frame" x="8" y="8" width="30" height="20"/>
                                                             <gestureRecognizers/>
                                                         </imageView>
@@ -154,24 +154,23 @@
                                                                 </textView>
                                                             </subviews>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywh-z9-b9r">
-                                                            <rect key="frame" x="185" y="4" width="30" height="28"/>
-                                                            <state key="normal" title="❤️"/>
-                                                            <connections>
-                                                                <action selector="onTapLikeButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="Tmq-PE-CW2"/>
-                                                            </connections>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l4-RE-z6X">
-                                                            <rect key="frame" x="144" y="10" width="33" height="16"/>
+                                                            <rect key="frame" x="134" y="10" width="33" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfA-MJ-3I7">
-                                                            <rect key="frame" x="240" y="2" width="30" height="30"/>
+                                                            <rect key="frame" x="228" y="-2" width="35" height="35"/>
                                                             <state key="normal" image="map"/>
                                                             <connections>
                                                                 <action selector="onMapButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="J2L-MV-87H"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywh-z9-b9r">
+                                                            <rect key="frame" x="177" y="-4" width="43" height="43"/>
+                                                            <connections>
+                                                                <action selector="onTapLikeButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="Tmq-PE-CW2"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -188,6 +187,7 @@
                                         <connections>
                                             <outlet property="backView" destination="9oF-F3-msP" id="nvj-4a-qKv"/>
                                             <outlet property="descriptionLabel" destination="pqM-Ml-vvf" id="hKY-28-qf7"/>
+                                            <outlet property="likeButton" destination="ywh-z9-b9r" id="tOV-P5-6l6"/>
                                             <outlet property="likesCountLabel" destination="1l4-RE-z6X" id="ava-j3-e8b"/>
                                             <outlet property="showDescription" destination="N7H-LO-gMG" id="MtW-5f-7jA"/>
                                             <outlet property="slideshow" destination="gcD-OF-7Ba" id="Eab-zf-ME3"/>
@@ -965,10 +965,10 @@
     <resources>
         <image name="background" width="1040" height="1526"/>
         <image name="chat" width="32" height="32"/>
-        <image name="down_arrow" width="20" height="14"/>
         <image name="home" width="32" height="32"/>
         <image name="location" width="50" height="50"/>
-        <image name="map" width="512" height="512"/>
+        <image name="map" width="256" height="256"/>
+        <image name="menu" width="24" height="24"/>
         <image name="paw" width="32" height="32"/>
         <image name="user" width="32" height="32"/>
     </resources>

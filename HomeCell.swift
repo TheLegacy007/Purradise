@@ -18,6 +18,7 @@ protocol MapDelegate {
 
 class HomeCell: UITableViewCell {
     
+    @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var subdescriptionLabel: UILabel!
     @IBOutlet weak var tiltleSubView: UIView!
@@ -75,6 +76,13 @@ class HomeCell: UITableViewCell {
                 slideshow.pageControl.pageIndicatorTintColor = UIColor.lightGrayColor();
                 
 //                print(homeCell["likesCount"])
+                let like = homeCell["likesCount"] as! Int
+                if  like == 0 {
+                    likeButton.setImage(UIImage(named: "like"), forState: .Normal)
+                } else {
+                    likeButton.setImage(UIImage(named: "like-on"), forState: .Normal)
+                }
+                
                 likesCountLabel.text = String(homeCell["likesCount"])
                 geoLocation = homeCell["geoLocation"] as! PFGeoPoint
                 descriptionLabel.text = homeCell["description"] as? String
@@ -82,6 +90,19 @@ class HomeCell: UITableViewCell {
                 let type = homeCell["objectName"] as! String
                 let action = homeCell["requiredAction"] as! String
 
+                let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
+                content.contentURL = NSURL(string: "<INSERT STRING HERE>")
+                content.contentTitle = subdescriptionLabel.text
+                content.contentDescription = descriptionLabel.text
+                content.imageURL = NSURL(string: "<INSERT STRING HERE>")
+                
+                let shareButton : FBSDKShareButton = FBSDKShareButton()
+                //        shareButton.setImage(UIImage(named: "share"), forState: .Normal)
+                //        shareButton.setTitle(nil, forState: .Normal)
+                shareButton.center = CGPoint(x: 310, y: 16)
+                shareButton.shareContent = content
+                trayView.addSubview(shareButton)
+                
                 switch type {
                     case "Dog":
                         switch action {
@@ -206,6 +227,8 @@ class HomeCell: UITableViewCell {
     
     @IBAction func onTapLikeButton(sender: UIButton) {
         // The following implementation is a very simple like button. Further improvement will be done. 
+        likeButton.setImage(UIImage(named: "like-on"), forState: .Normal)
+
         let query = PFQuery(className:"UserMedia")
         query.getObjectInBackgroundWithId(homeCell.objectId!) { (cloudData: PFObject?, error: NSError?) in
             if error != nil {
@@ -259,7 +282,6 @@ class HomeCell: UITableViewCell {
     func onPanDescription(sender: UIPanGestureRecognizer){
         // Absolute (x,y) coordinates in parent view (parentView should be
         // the parent view of the tray)
-        let point = sender.locationInView(trayView)
         let translation = sender.translationInView(trayView)
         let velocity = sender.velocityInView(trayView)
         
@@ -321,19 +343,8 @@ class HomeCell: UITableViewCell {
         subdescriptionLabel.textColor = UIColor.blackColor()
         subdescriptionLabel.sizeToFit()
         
-        let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-        content.contentURL = NSURL(string: "<INSERT STRING HERE>")
-        content.contentTitle = "<INSERT STRING HERE>"
-        content.contentDescription = "<INSERT STRING HERE>"
-        content.imageURL = NSURL(string: "<INSERT STRING HERE>")
-        
-        let shareButton : FBSDKShareButton = FBSDKShareButton()
-//        shareButton.setImage(UIImage(named: "share"), forState: .Normal)
-//        shareButton.setTitle(nil, forState: .Normal)
-        shareButton.center = CGPoint(x: 310, y: 16)
-        shareButton.shareContent = content
-        trayView.addSubview(shareButton)
         self.trayView.center = self.trayCenterWhenClosed
+
 
     
     }
