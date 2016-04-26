@@ -154,12 +154,6 @@
                                                                 </textView>
                                                             </subviews>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l4-RE-z6X">
-                                                            <rect key="frame" x="134" y="10" width="33" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfA-MJ-3I7">
                                                             <rect key="frame" x="228" y="-2" width="35" height="35"/>
                                                             <state key="normal" image="map"/>
@@ -173,6 +167,12 @@
                                                                 <action selector="onTapLikeButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="Tmq-PE-CW2"/>
                                                             </connections>
                                                         </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l4-RE-z6X">
+                                                            <rect key="frame" x="145" y="10" width="33" height="16"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -382,14 +382,8 @@
                                 <action selector="onTapCancelButton:" destination="2jB-fn-jXK" id="eiP-QL-LQQ"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="5x8-C0-wC3">
-                            <connections>
-                                <action selector="onTapComposeButton:" destination="2jB-fn-jXK" id="Woz-iF-Qo9"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="composeButton" destination="5x8-C0-wC3" id="x8X-27-hyu"/>
                         <outlet property="emptyView" destination="ON5-He-ouy" id="3KR-sX-vGQ"/>
                         <segue destination="hxp-YU-UrZ" kind="show" identifier="messagesChatSegue" id="691-cE-Mag"/>
                     </connections>
@@ -796,7 +790,7 @@
                     <navigationItem key="navigationItem" id="nh6-gL-9OD">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="CYT-qw-DVj">
                             <connections>
-                                <action selector="dismissPhotoPicker:" destination="loY-ZC-Gpf" id="Sel-Zh-Z6M"/>
+                                <action selector="onTapCancelButton:" destination="loY-ZC-Gpf" id="eW9-i5-Znj"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Post" id="u9U-mt-qB2">
@@ -973,6 +967,6 @@
         <image name="user" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JzI-g5-6GJ"/>
+        <segue reference="691-cE-Mag"/>
     </inferredMetricsTieBreakers>
 </document>
