@@ -254,12 +254,40 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         option.resizeMode = PHImageRequestOptionsResizeMode.Exact
         option.deliveryMode =  PHImageRequestOptionsDeliveryMode.HighQualityFormat
         option.version = PHImageRequestOptionsVersion.Current
-        option.networkAccessAllowed = true
-        option.normalizedCropRect = CGRect(x: 0, y: 0, width: 375, height: 375)
-        for asset in assets {
-            manager.requestImageForAsset(asset as! PHAsset, targetSize: CGSize(width: 1024, height:  1024), contentMode: .AspectFit, options: option, resultHandler: { (result, info) in
+//        option.networkAccessAllowed = true
+        
+        for asset in assets as! [PHAsset] {
+            
+            let originalWidth  = CGFloat(asset.pixelWidth)
+            let originalHeight = CGFloat(asset.pixelHeight)
+            var x: CGFloat = 0.0
+            var y: CGFloat = 0.0
+            var edge: CGFloat = 0.0
+            
+            if (originalWidth > originalHeight) {
+                // landscape
+                edge = originalHeight
+                x = (originalWidth - edge) / 2.0
+                y = 0.0
+                
+            } else if (originalHeight > originalWidth) {
+                // portrait
+                edge = originalWidth
+                x = 0.0
+                y = (originalHeight - originalWidth) / 2.0
+            } else {
+                // square
+                edge = originalWidth
+            }
+            
+            let square = CGRectMake(x, y, edge, edge)
+            let cropRect = CGRectApplyAffineTransform(square, CGAffineTransformMakeScale(1.0 / originalWidth, 1.0 / originalHeight))
+            option.normalizedCropRect = cropRect
+            manager.requestImageForAsset(asset, targetSize: CGSize(width: edge, height:  edge), contentMode: .AspectFit, options: option, resultHandler: { (result, info) in
                 self.resizedImage.append(result!)
                 self.selectedImageView.image = result
+                print(info)
+                print(result)
                 print("You selected \(self.resizedImage.count)")
             })
         }
