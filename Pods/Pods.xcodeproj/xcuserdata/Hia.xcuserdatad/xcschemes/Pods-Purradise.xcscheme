@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '4636B361CB588F74169B31FB'
+               BlueprintIdentifier = 'F2FC27B36644AFE42A7D9D94'
                BlueprintName = 'Pods-Purradise'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_Purradise.framework'>

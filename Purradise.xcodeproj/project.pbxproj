@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		061786DB1CBA2FC900445DB2 /* CenterTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061786DA1CBA2FC900445DB2 /* CenterTabBarController.swift */; };
 		061786DD1CBA323700445DB2 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 061786DC1CBA323600445DB2 /* CameraController.swift */; };
-		0635E11C1CC52097009150C5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635E11B1CC52097009150C5 /* UserViewController.swift */; };
 		0635E1201CC52D84009150C5 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635E11F1CC52D84009150C5 /* FilterViewController.swift */; };
 		0635E1241CC52F2A009150C5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0635E1231CC52F2A009150C5 /* HomeViewController.swift */; };
-		066207A31CCE66F9004D11B1 /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 066207A21CCE66F9004D11B1 /* UserCollectionViewCell.swift */; };
+		069B9DBE1CCF993C0088578B /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B9DBD1CCF993C0088578B /* UserViewController.swift */; };
+		069B9DC01CCF998B0088578B /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069B9DBF1CCF998B0088578B /* UserCell.swift */; };
 		06A4042C1CB93A3400BC9F2C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A4042B1CB93A3400BC9F2C /* AppDelegate.swift */; };
 		06A404311CB93A3400BC9F2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06A4042F1CB93A3400BC9F2C /* Main.storyboard */; };
 		06A404331CB93A3400BC9F2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06A404321CB93A3400BC9F2C /* Assets.xcassets */; };
@@ -45,10 +45,10 @@
 /* Begin PBXFileReference section */
 		061786DA1CBA2FC900445DB2 /* CenterTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterTabBarController.swift; sourceTree = "<group>"; };
 		061786DC1CBA323600445DB2 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
-		0635E11B1CC52097009150C5 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		0635E11F1CC52D84009150C5 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		0635E1231CC52F2A009150C5 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		066207A21CCE66F9004D11B1 /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCollectionViewCell.swift; sourceTree = "<group>"; };
+		069B9DBD1CCF993C0088578B /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		069B9DBF1CCF998B0088578B /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		06A404281CB93A3400BC9F2C /* Purradise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Purradise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06A4042B1CB93A3400BC9F2C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		06A404301CB93A3400BC9F2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 				06E2A2201CC6325D0063D55C /* ChatViewController.swift */,
 				06D3C5F61CCB85230026C230 /* MapViewController.swift */,
 				CB17CFFC1CCD379900099935 /* MessagesViewController.swift */,
-				0635E11B1CC52097009150C5 /* UserViewController.swift */,
+				069B9DBD1CCF993C0088578B /* UserViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -182,7 +182,7 @@
 				06D3C5F31CCA7FD30026C230 /* HomeHeaderCell.swift */,
 				06A664AD1CC22CC700667A53 /* PreferencesCell.swift */,
 				CB17CFFE1CCD437E00099935 /* MessagesCell.swift */,
-				066207A21CCE66F9004D11B1 /* UserCollectionViewCell.swift */,
+				069B9DBF1CCF998B0088578B /* UserCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -241,7 +241,7 @@
 				TargetAttributes = {
 					06A404271CB93A3400BC9F2C = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = HHM8N6W27Z;
+						DevelopmentTeam = T34HEQQ8ZH;
 					};
 				};
 			};
@@ -332,12 +332,12 @@
 				CB1870C91CC6A37D002F6A09 /* FilterSettings.swift in Sources */,
 				CBEFCE721CC92E0700CDFC64 /* Constants.swift in Sources */,
 				CBEFCE6E1CC92D5D00CDFC64 /* Messages.swift in Sources */,
-				0635E11C1CC52097009150C5 /* UserViewController.swift in Sources */,
 				06A4043E1CB93A5100BC9F2C /* LoginViewController.swift in Sources */,
 				06D3C5FB1CCB91CA0026C230 /* PhotoAnnotation.swift in Sources */,
 				CB0F1B5E1CCE946800D17AA1 /* Utilities.swift in Sources */,
 				06A664AE1CC22CC700667A53 /* PreferencesCell.swift in Sources */,
 				CB17CFFF1CCD437E00099935 /* MessagesCell.swift in Sources */,
+				069B9DC01CCF998B0088578B /* UserCell.swift in Sources */,
 				0635E1241CC52F2A009150C5 /* HomeViewController.swift in Sources */,
 				06D3C5F71CCB85230026C230 /* MapViewController.swift in Sources */,
 				06D3C5F41CCA7FD30026C230 /* HomeHeaderCell.swift in Sources */,
@@ -350,8 +350,8 @@
 				06A4044E1CB950DB00BC9F2C /* HomeCell.swift in Sources */,
 				06E2A2211CC6325D0063D55C /* ChatViewController.swift in Sources */,
 				061786DD1CBA323700445DB2 /* CameraController.swift in Sources */,
+				069B9DBE1CCF993C0088578B /* UserViewController.swift in Sources */,
 				061786DB1CBA2FC900445DB2 /* CenterTabBarController.swift in Sources */,
-				066207A31CCE66F9004D11B1 /* UserCollectionViewCell.swift in Sources */,
 				CB0FF5991CC4B54F00326004 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +477,7 @@
 				INFOPLIST_FILE = Purradise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -498,7 +498,7 @@
 				INFOPLIST_FILE = Purradise/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nhattruong.Purradises;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

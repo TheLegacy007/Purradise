@@ -80,9 +80,28 @@ class HomeCell: UITableViewCell {
                 descriptionLabel.text = homeCell["description"] as? String
                 let location = homeCell["location"] as! String
                 let type = homeCell["objectName"] as! String
+                let action = homeCell["requiredAction"] as! String
+
                 switch type {
-                    case "Dog": subdescriptionLabel.text = "A cute puppy needs your help at \(location)"
-                    case "Cat": subdescriptionLabel.text = "A cute kitty needs your help at \(location)"
+                    case "Dog":
+                        switch action {
+                        case "Rescue": subdescriptionLabel.text = "A cute puppy needs to be rescued at \(location)"
+                        case "Adopt": subdescriptionLabel.text = "A cute puppy needs a shelter at \(location)"
+                        case "Lo&Fo": subdescriptionLabel.text = "A cute puppy is missing at \(location)"
+                        case "Other": subdescriptionLabel.text = "A cute puppy needs your help at \(location)"
+                        default: break
+
+                        }
+                    case "Cat":
+                        switch action {
+                        case "Rescue": subdescriptionLabel.text = "A cute kitty needs to be rescued at \(location)"
+                        case "Adopt": subdescriptionLabel.text = "A cute kitty needs a shelter at \(location)"
+                        case "Lo&Fo": subdescriptionLabel.text = "A cute kitty is missing at \(location)"
+                        case "Other": subdescriptionLabel.text = "A cute kitty needs your help at \(location)"
+                        default: break
+                            
+                        }
+
                     case "Other": subdescriptionLabel.text = "A cute animal needs your help at \(location)"
                 default: break
                 }
@@ -178,7 +197,8 @@ class HomeCell: UITableViewCell {
         ctr.inputs = slideshow.images
         self.transitionDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow)
         // Uncomment if you want disable the slide-to-dismiss feature
-        // self.transitionDelegate?.slideToDismissEnabled = false
+        
+    
 
         ctr.transitioningDelegate = self.transitionDelegate
         self.window?.rootViewController?.presentViewController(ctr, animated: true, completion: nil)
@@ -197,6 +217,9 @@ class HomeCell: UITableViewCell {
                 self.likesCountLabel.text = String(likesCount)
                 print(likesCount)
                 cloudData.saveInBackground()
+                self.backView.hidden = true
+                
+                self.backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
             }
         }
     }
@@ -257,6 +280,8 @@ class HomeCell: UITableViewCell {
 
                 } else if velocity.y == 0 {
                     self.backView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+
+                
                 } else if velocity.y < 0 {
                     self.trayView.center = self.trayCenterWhenOpen
 

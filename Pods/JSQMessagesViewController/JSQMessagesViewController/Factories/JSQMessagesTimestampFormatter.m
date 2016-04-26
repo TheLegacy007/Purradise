@@ -20,9 +20,7 @@
 
 @interface JSQMessagesTimestampFormatter ()
 
-// Separate formatters for the Date & Time parts for performance reasons
 @property (strong, nonatomic, readwrite) NSDateFormatter *dateFormatter;
-@property (strong, nonatomic, readwrite) NSDateFormatter *timeFormatter;
 
 @end
 
@@ -52,9 +50,6 @@
         [_dateFormatter setLocale:[NSLocale currentLocale]];
         [_dateFormatter setDoesRelativeDateFormatting:YES];
         
-        _timeFormatter = [[NSDateFormatter alloc] init];
-        [_timeFormatter setLocale:[NSLocale currentLocale]];
-        
         UIColor *color = [UIColor lightGrayColor];
         
         NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -71,14 +66,6 @@
     return self;
 }
 
-- (void)dealloc
-{
-    _dateFormatter = nil;
-    _timeFormatter = nil;
-    _dateTextAttributes = nil;
-    _timeTextAttributes = nil;
-}
-
 #pragma mark - Formatter
 
 - (NSString *)timestampForDate:(NSDate *)date
@@ -87,10 +74,9 @@
         return nil;
     }
     
-    NSString *relativeDate = [self relativeDateForDate:date];
-    NSString *time = [self timeForDate:date];
-    
-    return [NSString stringWithFormat:@"%@, %@", relativeDate, time];
+    [self.dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [self.dateFormatter stringFromDate:date];
 }
 
 - (NSAttributedString *)attributedTimestampForDate:(NSDate *)date
@@ -119,9 +105,9 @@
         return nil;
     }
     
-    [self.timeFormatter setDateStyle:NSDateFormatterNoStyle];
-    [self.timeFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [self.timeFormatter stringFromDate:date];
+    [self.dateFormatter setDateStyle:NSDateFormatterNoStyle];
+    [self.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [self.dateFormatter stringFromDate:date];
 }
 
 - (NSString *)relativeDateForDate:(NSDate *)date

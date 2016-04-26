@@ -24,7 +24,12 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.mapType = MKMapType.Hybrid
+        mapView.mapType = MKMapType.Standard
+
         mapView.delegate = self
+        
         print("geolocation", geoLocation)
         let coordinate = CLLocationCoordinate2DMake(geoLocation!.latitude, geoLocation!.longitude)
 
@@ -38,6 +43,13 @@ class MapViewController: UIViewController {
         annotation.photo = petImage
         mapView.addAnnotation(annotation)
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        mapView.delegate = nil
+        mapView.removeFromSuperview()
+        mapView = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -56,8 +68,12 @@ extension MapViewController: MKMapViewDelegate{
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseID)
         
         let resizeRenderImageView = UIImageView(frame: CGRectMake(0, 0, 45, 45))
-        resizeRenderImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        resizeRenderImageView.layer.borderWidth = 3.0
+        resizeRenderImageView.layer.borderColor = UIColor.redColor().CGColor
+        resizeRenderImageView.layer.masksToBounds = false
+        resizeRenderImageView.layer.cornerRadius = resizeRenderImageView.frame.height/2
+        resizeRenderImageView.clipsToBounds = true
+        
+        resizeRenderImageView.layer.borderWidth = 2.0
         resizeRenderImageView.contentMode = UIViewContentMode.ScaleAspectFill
         resizeRenderImageView.image = (annotation as? PhotoAnnotation)?.photo
         

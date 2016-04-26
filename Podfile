@@ -11,6 +11,5 @@ target 'Purradise' do
    pod 'QBImagePickerController'
    pod 'JSQMessagesViewController', :git => 'https://github.com/jessesquires/JSQMessagesViewController.git', :branch => 'develop'
    pod 'JSQSystemSoundPlayer'
-
 end
 

@@ -8,78 +8,65 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>DGActivityIndicatorView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>ImageSlideshow-ImageSlideshow.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>ImageSlideshow.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>JSQMessagesViewController.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>10</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>JSQSystemSoundPlayer.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>11</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>Pods-Purradise.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 		<key>QBImagePickerController-QBImagePicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>8</integer>
 		</dict>
 		<key>QBImagePickerController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>7</integer>
 		</dict>
 		<key>RWDropdownMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>9</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1ED4DFAAD25E1999D0244868457A351E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1FFFCC9DFEF1600D5E72D00B7B7A86CF</key>
 		<dict>
 			<key>primary</key>
@@ -100,12 +87,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>48598E4291C55EE6571A7A4297872DAF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>6795CF3690EED0C23304D207C2621875</key>
+		<key>59CDDB315DD2B098E0CD9ED56B026F4B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -120,27 +102,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>755F03B96B5A4590D8EA1E46642C5C68</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7798591EBDD75A21C8C5515C409B1AC2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>B272B33F162D6E5C3510BA50ECF2684B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B4BA50984BD5A1180C9166AB929D350B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>B6F441FEF4E9921DBC2E871074F3E79B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
