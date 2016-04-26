@@ -79,7 +79,7 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         // Tune in keyboard's events
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CameraController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        navigationItem.title = "No image selected"
+        navigationItem.title = ""
         
         // Location service
         locationManager.delegate = self
@@ -224,6 +224,11 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
         // Don't wait for the network (insert images into the post directly as we had the images locally).
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    @IBAction func onTapCancelButton(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         // let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage

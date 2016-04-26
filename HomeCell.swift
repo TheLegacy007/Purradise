@@ -236,9 +236,8 @@ class HomeCell: UITableViewCell {
             } else if let cloudData = cloudData {
                 var likesCount = cloudData["likesCount"] as! Int
                 likesCount += 1
-                cloudData["likesCount"] = likesCount
                 self.likesCountLabel.text = String(likesCount)
-                print(likesCount)
+                cloudData.incrementKey("likesCount")
                 cloudData.saveInBackground()
                 self.backView.hidden = true
                 

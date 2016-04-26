@@ -57,7 +57,7 @@ class UserCell: UITableViewCell {
             }
             if let userCell = userCell {
                 descriptionText.text = userCell["description"] as? String
-                if let media = userCell["media"] {
+                if let media = userCell["image0"] {
                     media.getDataInBackgroundWithBlock({ (data: NSData?, error: NSError?) -> Void in
                         if let data = data {
                            

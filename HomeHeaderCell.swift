@@ -64,7 +64,7 @@ class HomeHeaderCell: UITableViewCell {
                 
                 authorLabel.text = homeHeaderCell["authorName"] as? String
 //                locationLabel.text = homeHeaderCell["location"] as? String
-                let updatedAt = homeHeaderCell.updatedAt
+                let updatedAt = homeHeaderCell.createdAt
                 
                 HomeCell.dateFormatter.dateFormat = "HH:mm:ss EEE MMM"
 //                timestampLabel.text = HomeCell.dateFormatter.stringFromDate(updatedAt!)
