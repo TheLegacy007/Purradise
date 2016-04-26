@@ -75,7 +75,7 @@ class UserCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        petImage.layer.borderColor = UIColor.redColor().CGColor
+        petImage.layer.borderColor = UIColor.whiteColor().CGColor
         petImage.layer.masksToBounds = false
         petImage.layer.cornerRadius = petImage.frame.height/2
         petImage.clipsToBounds = true

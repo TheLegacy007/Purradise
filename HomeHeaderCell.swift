@@ -31,30 +31,35 @@ class HomeHeaderCell: UITableViewCell {
                 
                 let type = homeHeaderCell["objectName"] as! String
                 let action = homeHeaderCell["requiredAction"] as! String
-
-                switch type {
+                let status = homeHeaderCell["wasRescued"] as! Bool
+                if status == true {
+                    actionImage.image = UIImage(named: "check-mark")
+                } else {
+                    switch type {
                     case "Dog":
                         switch action {
-                            case "Rescue": actionImage.image = UIImage(named: "dog-bone-red")
-                            case "Adopt": actionImage.image = UIImage(named: "dog-bone-green")
-                            case "Lo&Fo": actionImage.image = UIImage(named: "dog-bone-yellow")
-                            case "Other": actionImage.image = UIImage(named: "dog-bone")
-                            default: break
+                        case "Rescue": actionImage.image = UIImage(named: "dog-bone-red")
+                        case "Adopt": actionImage.image = UIImage(named: "dog-bone-green")
+                        case "Lo&Fo": actionImage.image = UIImage(named: "dog-bone-yellow")
+                        case "Other": actionImage.image = UIImage(named: "dog-bone")
+                        default: break
                             
                         }
-
-                    
+                        
+                        
                     case "Cat":
                         switch action {
-                            case "Rescue": actionImage.image = UIImage(named: "fish-bone-red")
-                            case "Adopt": actionImage.image = UIImage(named: "fish-bone-green")
-                            case "Lo&Fo": actionImage.image = UIImage(named: "fish-bone-yellow")
-                            case "Other": actionImage.image = UIImage(named: "fish-bone")
-                            default: break
+                        case "Rescue": actionImage.image = UIImage(named: "fish-bone-red")
+                        case "Adopt": actionImage.image = UIImage(named: "fish-bone-green")
+                        case "Lo&Fo": actionImage.image = UIImage(named: "fish-bone-yellow")
+                        case "Other": actionImage.image = UIImage(named: "fish-bone")
+                        default: break
                             
                         }
                     case "Other": actionImage.image = nil
-                default: break
+                    default: break
+                    }
+
                 }
                 
                 authorLabel.text = homeHeaderCell["authorName"] as? String

@@ -21,27 +21,27 @@ class CenterTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tabBar.tintColor = uicolorFromHex(0xffd700)
+        tabBar.tintColor = uicolorFromHex(0x009acd)
         tabBar.barTintColor = UIColor.whiteColor()
-        tabBar.translucent = false
+        tabBar.translucent = true
         
-        let centerButton = UIButton(type: .Custom)
-        let buttonImage = UIImage(named: "paw")
-        let numTabs = self.viewControllers!.count
-        
-        if buttonImage != nil{
-            let screenWidth = UIScreen.mainScreen().bounds.size.width
-            centerButton.frame = CGRectMake(0, 0, screenWidth / CGFloat(numTabs), self.tabBar.frame.size.height)
-            centerButton.setImage(buttonImage, forState: .Normal)
-            centerButton.tintColor = UIColor.whiteColor()
-            centerButton.backgroundColor = UIColor(red: 18/255.0, green: 86/255.0, blue: 136/255.0, alpha: 1.0)
-            
-            centerButton.center = self.tabBar.center
-            
-            centerButton.addTarget(self, action: #selector(CenterTabBarController.showCamera(_:)), forControlEvents: .TouchUpInside)
-            
-            self.view.addSubview(centerButton)
-        }
+//        let centerButton = UIButton(type: .Custom)
+//        let buttonImage = UIImage(named: "paw")
+//        let numTabs = self.viewControllers!.count
+//        
+//        if buttonImage != nil{
+//            let screenWidth = UIScreen.mainScreen().bounds.size.width
+//            centerButton.frame = CGRectMake(0, 0, screenWidth / CGFloat(numTabs), self.tabBar.frame.size.height)
+//            centerButton.setImage(buttonImage, forState: .Normal)
+//            centerButton.tintColor = UIColor.whiteColor()
+////            centerButton.backgroundColor = UIColor(red: 18/255.0, green: 86/255.0, blue: 136/255.0, alpha: 1.0)
+//            centerButton.backgroundColor = UIColor.whiteColor()
+//            centerButton.center = self.tabBar.center
+//            
+//            centerButton.addTarget(self, action: #selector(CenterTabBarController.showCamera(_:)), forControlEvents: .TouchUpInside)
+//            
+//            self.view.addSubview(centerButton)
+//        }
     }
     
     func showCamera(sender: UIButton!){
