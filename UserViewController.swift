@@ -12,11 +12,13 @@ import FBSDKLoginKit
 
 class UserViewController: UIViewController {
     
-    private let sectionInsets = UIEdgeInsets(top: 50.0, left: 20.0, bottom: 50.0, right: 20.0)
-    
+
+    @IBOutlet weak var userImage: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
     var cloudData: [PFObject]!
+    var refreshControl:UIRefreshControl!
+   
     
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBAction func onLogout(sender: UIBarButtonItem) {
         PFUser.logOutInBackgroundWithBlock { (error:NSError?) -> Void in
             if error != nil {
@@ -28,32 +30,60 @@ class UserViewController: UIViewController {
         // Logout with FB
         FBSDKLoginManager().logOut()
         performSegueWithIdentifier("toLoginSegue", sender: self)
-
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = PFUser.currentUser()?.username
         
-//        let username = PFUser.currentUser()!.username!
-//        print("username ", username)
-//        let query = PFQuery(className: "UserMedia")
-//        query.orderByDescending("createdAt")
-//        query.whereKey("authorName", equalTo: username)
-//        
-//        
-//        query.cachePolicy = .NetworkElseCache
-//
-//        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
-//            if object != nil && object?.count != 0{
-//                self.cloudData = object!
-//                print(object)
-//                self.collectionView.reloadData()
-//            }
-//        }
-        collectionView.delegate = self
-        collectionView.dataSource = self
-  
+        
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(UserViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        tableView.addSubview(refreshControl)
+        refresh(self)
+        
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    }
+    
+    func refresh(sender: AnyObject){
+        let username = PFUser.currentUser()!.username!
+        print("username ", username)
+        let query = PFQuery(className: "UserMedia")
+        query.orderByDescending("createdAt")
+        query.whereKey("authorName", equalTo: username)
+        
+        
+        query.cachePolicy = .NetworkElseCache
+        
+        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
+            if object != nil && object?.count != 0{
+                self.cloudData = object!
+                print(object)
+                self.tableView.reloadData()
+
+            }
+        }
+        self.refreshControl.endRefreshing()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        refresh(self)
+        userImage.layer.borderColor = UIColor.whiteColor().CGColor
+        userImage.layer.masksToBounds = false
+        userImage.layer.cornerRadius = userImage.frame.height/2
+        userImage.clipsToBounds = true
+        
+        userImage.layer.borderWidth = 3.0
+        userImage.contentMode = UIViewContentMode.ScaleAspectFill
     }
     
     override func didReceiveMemoryWarning() {
@@ -63,27 +93,38 @@ class UserViewController: UIViewController {
     
     
 }
-
-extension UserViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+extension UserViewController: UITableViewDataSource, UITableViewDelegate {
     
-    func collectionView(collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout,insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // Set the number of items in your collection view.
-        return 6
+
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return self.cloudData?.count ?? 0
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let grid = collectionView.dequeueReusableCellWithReuseIdentifier("UserCollectionViewCell", forIndexPath: indexPath) as! UserCollectionViewCell
-//                let userMedia = self.cloudData[indexPath.section] as PFObject
-//                grid.userCell = userMedia
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
+        let userMedia = self.cloudData[indexPath.section] as PFObject
         
-        return grid
+        cell.userCell = userMedia
+
+        cell.backgroundColor = UIColor.whiteColor()
+        cell.layer.borderColor = UIColor.blackColor().CGColor
+        cell.layer.borderWidth = 0.1
+        cell.clipsToBounds = true
+
+        
+        return cell
+        
     }
 }
+
