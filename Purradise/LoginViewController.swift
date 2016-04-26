@@ -15,6 +15,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, FBSDKShar
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet var makeupButtons: [UIButton]!
+    
     
     @IBAction func onTapRegister(sender: UIButton) {
         let user: PFUser = PFUser()
@@ -76,6 +78,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, FBSDKShar
 //        label.text = "Not Logged In"
 //        label.textAlignment = NSTextAlignment.Center
 //        view.addSubview(label)
+        
+        // Make up
+        for eachButton in makeupButtons {
+            eachButton.layer.cornerRadius = 5
+            eachButton.layer.borderWidth = 0.5
+            eachButton.layer.borderColor = eachButton.tintColor.CGColor
+        }
         
         let loginButton = FBSDKLoginButton()
         loginButton.center = CGPoint(x: view.center.x, y: 450)
