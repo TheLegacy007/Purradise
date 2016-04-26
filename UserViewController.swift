@@ -35,22 +35,22 @@ class UserViewController: UIViewController {
         
         navigationItem.title = PFUser.currentUser()?.username
         
-        let username = PFUser.currentUser()!.username!
-        print("username ", username)
-        let query = PFQuery(className: "UserMedia")
-        query.orderByDescending("createdAt")
-        query.whereKey("authorName", equalTo: username)
-        
-        
-        query.cachePolicy = .NetworkElseCache
-
-        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
-            if object != nil && object?.count != 0{
-                self.cloudData = object!
-                print(object)
-                self.collectionView.reloadData()
-            }
-        }
+//        let username = PFUser.currentUser()!.username!
+//        print("username ", username)
+//        let query = PFQuery(className: "UserMedia")
+//        query.orderByDescending("createdAt")
+//        query.whereKey("authorName", equalTo: username)
+//        
+//        
+//        query.cachePolicy = .NetworkElseCache
+//
+//        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
+//            if object != nil && object?.count != 0{
+//                self.cloudData = object!
+//                print(object)
+//                self.collectionView.reloadData()
+//            }
+//        }
         collectionView.delegate = self
         collectionView.dataSource = self
   
