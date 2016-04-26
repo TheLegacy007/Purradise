@@ -54,23 +54,25 @@ class UserViewController: UIViewController {
     }
     
     func refresh(sender: AnyObject){
-        let username = PFUser.currentUser()!.username!
-        print("username ", username)
-        let query = PFQuery(className: "UserMedia")
-        query.orderByDescending("createdAt")
-        query.whereKey("authorName", equalTo: username)
-        
-        
-        query.cachePolicy = .NetworkElseCache
-        
-        query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
-            if object != nil && object?.count != 0{
-                self.cloudData = object!
-                print(object)
-                self.tableView.reloadData()
-
+        if let username = PFUser.currentUser()!.username {
+            print("username ", username)
+            let query = PFQuery(className: "UserMedia")
+            query.orderByDescending("createdAt")
+            query.whereKey("authorName", equalTo: username)
+            
+            
+            query.cachePolicy = .NetworkElseCache
+            
+            query.findObjectsInBackgroundWithBlock { (object:[PFObject]?, error:NSError?) -> Void in
+                if object != nil && object?.count != 0{
+                    self.cloudData = object!
+                    print(object)
+                    self.tableView.reloadData()
+                    
+                }
             }
         }
+        
         self.refreshControl.endRefreshing()
         
     }

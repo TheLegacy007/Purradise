@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -19,25 +18,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purradise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpn-TB-BNv">
-                                <rect key="frame" x="114" y="176" width="93" height="27"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wh4-UI-HCS">
-                                <rect key="frame" x="74" y="254" width="172" height="30"/>
+                                <rect key="frame" x="70" y="133" width="180" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="ARe-5p-9C5"/>
+                                    <constraint firstAttribute="height" constant="30" id="FG2-TC-B2u"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="r6i-cl-reI">
-                                <rect key="frame" x="74" y="308" width="172" height="30"/>
+                                <rect key="frame" x="70" y="177" width="180" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FJy-qS-kZt"/>
+                                    <constraint firstAttribute="width" constant="180" id="dPp-PC-lZO"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lss-56-wPE">
-                                <rect key="frame" x="74" y="394" width="172" height="30"/>
+                                <rect key="frame" x="70" y="277" width="180" height="30"/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="Jrb-Ae-TcR"/>
+                                    <constraint firstAttribute="height" constant="30" id="YII-pi-zZB"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,8 +52,12 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XGe-eC-RML">
-                                <rect key="frame" x="74" y="354" width="172" height="30"/>
+                                <rect key="frame" x="70" y="233" width="180" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="YwG-qs-OgW"/>
+                                    <constraint firstAttribute="width" constant="180" id="k6f-FD-jNx"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,29 +66,37 @@
                                     <action selector="onTapLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TpO-oR-WOp"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Purradise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpn-TB-BNv">
+                                <rect key="frame" x="114" y="59" width="93" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="93" id="BTf-b7-cbX"/>
+                                    <constraint firstAttribute="height" constant="27" id="EjX-Qu-C24"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Lss-56-wPE" firstAttribute="centerX" secondItem="XGe-eC-RML" secondAttribute="centerX" id="F7n-1U-spT"/>
-                            <constraint firstItem="r6i-cl-reI" firstAttribute="top" secondItem="Wh4-UI-HCS" secondAttribute="bottom" constant="24" id="HJS-DG-uwZ"/>
-                            <constraint firstItem="Wh4-UI-HCS" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="NyZ-6C-hPL"/>
-                            <constraint firstItem="r6i-cl-reI" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="QxV-rR-eV4"/>
-                            <constraint firstItem="qpn-TB-BNv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Sip-zm-EAR"/>
-                            <constraint firstItem="r6i-cl-reI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="58" id="cBq-cL-St9"/>
-                            <constraint firstItem="r6i-cl-reI" firstAttribute="leading" secondItem="XGe-eC-RML" secondAttribute="leading" id="duJ-QF-aLj"/>
-                            <constraint firstItem="qpn-TB-BNv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="156" id="gHd-Rs-MdX"/>
-                            <constraint firstItem="XGe-eC-RML" firstAttribute="top" secondItem="r6i-cl-reI" secondAttribute="bottom" constant="16" id="gZ7-WU-DDl"/>
-                            <constraint firstItem="r6i-cl-reI" firstAttribute="leading" secondItem="Wh4-UI-HCS" secondAttribute="leading" id="hSI-Rs-eJX"/>
-                            <constraint firstItem="Lss-56-wPE" firstAttribute="leading" secondItem="XGe-eC-RML" secondAttribute="leading" id="let-S3-OhZ"/>
-                            <constraint firstItem="Lss-56-wPE" firstAttribute="top" secondItem="XGe-eC-RML" secondAttribute="bottom" constant="10" id="nWg-Kd-icv"/>
-                            <constraint firstItem="XGe-eC-RML" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="nrX-tg-NIX"/>
-                            <constraint firstItem="Wh4-UI-HCS" firstAttribute="top" secondItem="qpn-TB-BNv" secondAttribute="bottom" constant="51" id="pgF-Hd-UKG"/>
+                            <constraint firstItem="XGe-eC-RML" firstAttribute="top" secondItem="r6i-cl-reI" secondAttribute="bottom" constant="26" id="5HT-gH-Q3K"/>
+                            <constraint firstItem="Wh4-UI-HCS" firstAttribute="top" secondItem="qpn-TB-BNv" secondAttribute="bottom" constant="47" id="7fI-CT-B9c"/>
+                            <constraint firstItem="r6i-cl-reI" firstAttribute="top" secondItem="Wh4-UI-HCS" secondAttribute="bottom" constant="14" id="85k-aK-VPA"/>
+                            <constraint firstItem="XGe-eC-RML" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="Dw6-pT-egm"/>
+                            <constraint firstItem="Wh4-UI-HCS" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="E4d-Fc-nYo"/>
+                            <constraint firstItem="Lss-56-wPE" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="GL4-UB-JYq"/>
+                            <constraint firstItem="qpn-TB-BNv" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="39" id="HOX-o4-WQr"/>
+                            <constraint firstItem="Lss-56-wPE" firstAttribute="top" secondItem="XGe-eC-RML" secondAttribute="bottom" constant="14" id="KFZ-bz-J2j"/>
+                            <constraint firstItem="qpn-TB-BNv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vrz-XL-6bt"/>
+                            <constraint firstItem="r6i-cl-reI" firstAttribute="centerX" secondItem="qpn-TB-BNv" secondAttribute="centerX" id="wOm-0P-PjN"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="passwordTextField" destination="r6i-cl-reI" id="Gm1-xa-0WB"/>
                         <outlet property="usernameTextField" destination="Wh4-UI-HCS" id="ZnP-Jk-awI"/>
+                        <outletCollection property="makeupButtons" destination="XGe-eC-RML" id="cy3-fv-dyZ"/>
+                        <outletCollection property="makeupButtons" destination="Lss-56-wPE" id="Cdh-N4-axZ"/>
                         <segue destination="P1V-dg-c6h" kind="presentation" identifier="LoginToHomeSegue" id="EKT-00-4Bf"/>
                     </connections>
                 </viewController>
