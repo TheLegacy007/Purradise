@@ -343,13 +343,13 @@ class HomeCell: UITableViewCell {
         trayCenterWhenClosed = trayView.center
        
 //        tiltleSubView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
-        tiltleSubView.backgroundColor = UIColor.yellowColor()
+        tiltleSubView.backgroundColor = uicolorFromHex(0x009acd)
         backView.hidden = true
         backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
         
         trayView.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0)
 //        descriptionLabel.textColor = UIColor.whiteColor()
-        subdescriptionLabel.textColor = UIColor.blackColor()
+        subdescriptionLabel.textColor = UIColor.whiteColor()
         subdescriptionLabel.sizeToFit()
         
         
@@ -366,6 +366,14 @@ class HomeCell: UITableViewCell {
     
     }
 
+    func uicolorFromHex(rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
