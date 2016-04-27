@@ -95,8 +95,8 @@
                     <connections>
                         <outlet property="passwordTextField" destination="r6i-cl-reI" id="Gm1-xa-0WB"/>
                         <outlet property="usernameTextField" destination="Wh4-UI-HCS" id="ZnP-Jk-awI"/>
-                        <outletCollection property="makeupButtons" destination="XGe-eC-RML" id="cy3-fv-dyZ"/>
-                        <outletCollection property="makeupButtons" destination="Lss-56-wPE" id="Cdh-N4-axZ"/>
+                        <outletCollection property="makeupButtons" destination="XGe-eC-RML" collectionClass="NSMutableArray" id="cy3-fv-dyZ"/>
+                        <outletCollection property="makeupButtons" destination="Lss-56-wPE" collectionClass="NSMutableArray" id="Cdh-N4-axZ"/>
                         <segue destination="P1V-dg-c6h" kind="presentation" identifier="LoginToHomeSegue" id="EKT-00-4Bf"/>
                     </connections>
                 </viewController>
@@ -172,20 +172,20 @@
                                                             </subviews>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfA-MJ-3I7">
-                                                            <rect key="frame" x="228" y="-2" width="35" height="35"/>
+                                                            <rect key="frame" x="265" y="-2" width="35" height="35"/>
                                                             <state key="normal" image="map"/>
                                                             <connections>
                                                                 <action selector="onMapButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="J2L-MV-87H"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywh-z9-b9r">
-                                                            <rect key="frame" x="177" y="-4" width="43" height="43"/>
+                                                            <rect key="frame" x="214" y="-4" width="43" height="43"/>
                                                             <connections>
                                                                 <action selector="onTapLikeButton:" destination="b6w-cP-Sb7" eventType="touchUpInside" id="Tmq-PE-CW2"/>
                                                             </connections>
                                                         </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l4-RE-z6X">
-                                                            <rect key="frame" x="145" y="10" width="33" height="16"/>
+                                                            <rect key="frame" x="182" y="10" width="33" height="16"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -206,6 +206,7 @@
                                             <outlet property="descriptionLabel" destination="pqM-Ml-vvf" id="hKY-28-qf7"/>
                                             <outlet property="likeButton" destination="ywh-z9-b9r" id="tOV-P5-6l6"/>
                                             <outlet property="likesCountLabel" destination="1l4-RE-z6X" id="ava-j3-e8b"/>
+                                            <outlet property="mapButton" destination="YfA-MJ-3I7" id="FzY-uR-1IN"/>
                                             <outlet property="showDescription" destination="N7H-LO-gMG" id="MtW-5f-7jA"/>
                                             <outlet property="slideshow" destination="gcD-OF-7Ba" id="Eab-zf-ME3"/>
                                             <outlet property="subdescriptionLabel" destination="GeD-2H-6YK" id="HTT-Kh-st9"/>

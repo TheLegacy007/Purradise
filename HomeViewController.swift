@@ -80,17 +80,22 @@ class HomeViewController: UIViewController, FilterDelegate, CellDelegator, MapDe
             let dvc = segue.destinationViewController as! ChatViewController
             let groupId = sender as! String
             dvc.groupId = groupId
+            dvc.hidesBottomBarWhenPushed = true;
+
 //            dvc.hidesBottomBarWhenPushed = true    // There is more work to do with UICollectionViewFlowLayout, leave it for tomorrow.
 
         } else if segue.identifier == "toFilterSegue" {
             let dvc = segue.destinationViewController as! FilterViewController
             dvc.delegate = self
             dvc.filters = filterSettings
+            dvc.hidesBottomBarWhenPushed = true;
+
         } else if segue.identifier == "toMapSegue" {
             let dvc = segue.destinationViewController as! MapViewController
             dvc.geoLocation = geoLocation
             dvc.petImage = petImage
             print("prepare for toMapSegue")
+            dvc.hidesBottomBarWhenPushed = true;
 
         } else if segue.identifier == "messageViewSegue" {
  //           let dvc = segue.destinationViewController as! MessagesViewController

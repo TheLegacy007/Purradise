@@ -18,6 +18,7 @@ protocol MapDelegate {
 
 class HomeCell: UITableViewCell {
     
+    @IBOutlet weak var mapButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var subdescriptionLabel: UILabel!
@@ -99,7 +100,16 @@ class HomeCell: UITableViewCell {
                 let shareButton : FBSDKShareButton = FBSDKShareButton()
                 //        shareButton.setImage(UIImage(named: "share"), forState: .Normal)
                 //        shareButton.setTitle(nil, forState: .Normal)
-                shareButton.center = CGPoint(x: 310, y: 16)
+                shareButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+                shareButton.center = CGPoint(x: 330, y: 16)
+                shareButton.layer.masksToBounds = false
+                shareButton.layer.cornerRadius = shareButton.frame.height/2
+                shareButton.clipsToBounds = true
+                shareButton.layer.borderColor = UIColor.whiteColor().CGColor
+                shareButton.layer.borderWidth = 0.5
+                shareButton.contentMode = UIViewContentMode.ScaleAspectFill
+                print(shareButton.currentTitle)
+                shareButton.setTitle(nil, forState: .Normal)
                 shareButton.shareContent = content
                 trayView.addSubview(shareButton)
                 
@@ -342,6 +352,14 @@ class HomeCell: UITableViewCell {
         subdescriptionLabel.textColor = UIColor.blackColor()
         subdescriptionLabel.sizeToFit()
         
+        
+        mapButton.layer.masksToBounds = false
+        mapButton.layer.cornerRadius = mapButton.frame.height/2
+        mapButton.clipsToBounds = true
+        mapButton.layer.borderColor = UIColor.whiteColor().CGColor
+        mapButton.layer.borderWidth = 1.0
+        mapButton.contentMode = UIViewContentMode.ScaleAspectFill
+
         self.trayView.center = self.trayCenterWhenClosed
 
 
