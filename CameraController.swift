@@ -208,6 +208,9 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
                     
                 }
             })
+            self.dismissViewControllerAnimated(true, completion: nil)
+
+            
         } else {
             // An image is required.
             let alertVC = UIAlertController(
@@ -222,7 +225,6 @@ class CameraController: UIViewController, UIImagePickerControllerDelegate, UINav
             presentViewController(alertVC, animated: true, completion: nil)
         }
         // Don't wait for the network (insert images into the post directly as we had the images locally).
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func onTapCancelButton(sender: UIBarButtonItem) {
