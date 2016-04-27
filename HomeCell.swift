@@ -94,7 +94,7 @@ class HomeCell: UITableViewCell {
                 let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
                 content.contentURL = NSURL(string: "<INSERT STRING HERE>")
                 content.contentTitle = subdescriptionLabel.text
-                content.contentDescription = descriptionLabel.text
+                content.contentDescription = homeCell["description"] as? String
                 content.imageURL = NSURL(string: "<INSERT STRING HERE>")
                 
                 let shareButton : FBSDKShareButton = FBSDKShareButton()
