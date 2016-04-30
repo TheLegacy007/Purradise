@@ -10,7 +10,10 @@ import UIKit
 import Parse
 import Social
 import ImageSlideshow
-import FBSDKShareKit
+
+protocol CellDelegator {
+    func callSegueFromCell(myData dataobject: AnyObject)
+}
 
 protocol MapDelegate {
     func mapController(didGetMapData data: [String:AnyObject])
@@ -27,7 +30,8 @@ class HomeCell: UITableViewCell {
     var trayOriginalCenter: CGPoint!
     var trayCenterWhenClosed: CGPoint!
     var trayCenterWhenOpen: CGPoint!
-    
+    var delegete: CellDelegator!
+
     @IBOutlet weak var showDescription: UIImageView!
     @IBOutlet weak var trayView: UIView!
     
@@ -84,34 +88,13 @@ class HomeCell: UITableViewCell {
                     likeButton.setImage(UIImage(named: "like-on"), forState: .Normal)
                 }
                 
-                likesCountLabel.text = String(homeCell["likesCount"])
+//                likesCountLabel.text = String(homeCell["likesCount"])
                 geoLocation = homeCell["geoLocation"] as! PFGeoPoint
                 descriptionLabel.text = homeCell["description"] as? String
                 let location = homeCell["location"] as! String
                 let type = homeCell["objectName"] as! String
                 let action = homeCell["requiredAction"] as! String
 
-                let content : FBSDKShareLinkContent = FBSDKShareLinkContent()
-                content.contentURL = NSURL(string: "<INSERT STRING HERE>")
-                content.contentTitle = subdescriptionLabel.text
-                content.contentDescription = homeCell["description"] as? String
-                content.imageURL = NSURL(string: "<INSERT STRING HERE>")
-                
-                let shareButton : FBSDKShareButton = FBSDKShareButton()
-                //        shareButton.setImage(UIImage(named: "share"), forState: .Normal)
-                //        shareButton.setTitle(nil, forState: .Normal)
-                shareButton.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
-                shareButton.center = CGPoint(x: 330, y: 16)
-                shareButton.layer.masksToBounds = false
-                shareButton.layer.cornerRadius = shareButton.frame.height/2
-                shareButton.clipsToBounds = true
-                shareButton.layer.borderColor = UIColor.whiteColor().CGColor
-                shareButton.layer.borderWidth = 0.5
-                shareButton.contentMode = UIViewContentMode.ScaleAspectFill
-                print(shareButton.currentTitle)
-                shareButton.setTitle(nil, forState: .Normal)
-                shareButton.shareContent = content
-                trayView.addSubview(shareButton)
                 
                 switch type {
                     case "Dog":
@@ -256,6 +239,22 @@ class HomeCell: UITableViewCell {
         }
     }
     
+    @IBAction func onTapPrivateChat(sender: UIButton) {
+        // Create a groupId if needed (of two) and segue to chatVC
+        let user1 = PFUser.currentUser()!.username!
+        let user2 = homeCell["authorName"] as! String
+        print(user1, user2)
+        
+        let groupId = Messages.startPrivateChat(user1, user2: user2)
+        print("groupId", groupId)
+        self.openChat(groupId)
+        
+    }
+    
+    func openChat(groupId: String) {
+        self.delegete.callSegueFromCell(myData: groupId)
+    }
+
     @IBAction func onTapFacebookShareButton(sender: AnyObject) {
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) {
             let fbShare:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
@@ -306,6 +305,8 @@ class HomeCell: UITableViewCell {
             UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.4, initialSpringVelocity: 1, options: [], animations: { () -> Void in
                 if velocity.y > 0 {
                     self.trayView.center = self.trayCenterWhenClosed
+                    print("close ", self.trayView.center)
+
                     self.backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
                     self.backView.hidden = true
 
@@ -339,11 +340,19 @@ class HomeCell: UITableViewCell {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(HomeCell.onPanDescription(_:)))
         trayView.addGestureRecognizer(panGesture)
         
-        trayCenterWhenOpen = CGPoint(x: trayView.center.x, y:trayView.center.y - 350)
+        trayCenterWhenOpen = CGPoint(x: slideshow.center.x, y:slideshow.center.y)
         trayCenterWhenClosed = trayView.center
-       
+        
+       print("close ", trayCenterWhenClosed)
 //        tiltleSubView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
         tiltleSubView.backgroundColor = uicolorFromHex(0x009acd)
+        tiltleSubView.layer.borderWidth = 0.3
+        tiltleSubView.layer.borderColor = UIColor.whiteColor().CGColor
+
+        tiltleSubView.layer.cornerRadius = 10
+        tiltleSubView.clipsToBounds = true
+
+        
         backView.hidden = true
         backView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0)
         
@@ -353,14 +362,14 @@ class HomeCell: UITableViewCell {
         subdescriptionLabel.sizeToFit()
         
         
-        mapButton.layer.masksToBounds = false
-        mapButton.layer.cornerRadius = mapButton.frame.height/2
-        mapButton.clipsToBounds = true
-        mapButton.layer.borderColor = UIColor.whiteColor().CGColor
-        mapButton.layer.borderWidth = 1.0
-        mapButton.contentMode = UIViewContentMode.ScaleAspectFill
+        descriptionLabel.layer.borderWidth = 0.1
+        descriptionLabel.layer.cornerRadius = 5
+        descriptionLabel.clipsToBounds = true
 
-        self.trayView.center = self.trayCenterWhenClosed
+        
+        
+
+//        self.trayView.center = self.trayCenterWhenClosed
 
 
     
