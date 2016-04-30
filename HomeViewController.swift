@@ -182,7 +182,11 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     // Set the spacing between sections
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 55
+        return 45
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 10
     }
     
     // Make the background color show through
@@ -190,7 +194,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         let headerCell = tableView.dequeueReusableCellWithIdentifier("HomeHeaderCell") as! HomeHeaderCell
         
         headerCell.homeHeaderCell = self.cloudData[section] as PFObject
-        headerCell.delegete = self
         return headerCell
 
     }
@@ -207,7 +210,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.layer.borderWidth = 0.1
         cell.layer.cornerRadius = 5
         cell.clipsToBounds = true
-        
+        cell.delegete = self
+
         cell.delegate = self
         
         return cell
@@ -215,6 +219,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func uicolorFromHex(rgbValue:UInt32)->UIColor{
+        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
+        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
+        let blue = CGFloat(rgbValue & 0xFF)/256.0
+        
+        return UIColor(red:red, green:green, blue:blue, alpha:1.0)
     }
     
     //MARK: - CellDelegator Method
