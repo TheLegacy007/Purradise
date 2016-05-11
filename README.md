@@ -8,7 +8,7 @@ Contributors: Nguyen, Nhat and Andrew.
 
 Here are the main user stories, but it is not limit to just these below:
 
-- Create and account with Purradise or login with Facebook.
+- Create an account with Purradise or login with Facebook.
 - Post pet's photos and relevant informaiton for adoption, lost&found or rescue purpose.
 - Contact other people via direct chat.
 - Fillter what you want to see in the home screen i.e. distance, pet type, activity, ...
